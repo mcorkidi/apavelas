@@ -1,0 +1,49 @@
+{% extends 'apavelas/base.html' %}
+{% block body %}
+{% load static %}
+
+<div class="container d-flex justify-content-center">
+    <div class="p-2 shadow rounded mb-2 mt-3 text-center">
+        <div class="row">
+            <div class="col-lg-6 col-sm-12">
+                
+                
+                <img src="{{ profile.faceImage.url }}" height="150" width="150" alt="...">
+                
+                
+            </div>
+            <div class="col-lg-6 col-sm-12">
+                <img src="{% static '/apavelas/logo.jpg' %}" width="75" height="75" alt="" class="mb-4">
+                <br>
+
+                <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>
+                
+            </div>
+            
+            
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-sm-12">
+                <img src="/pictures/qrcodes/{{ profile.id }}.jpg" style="width:150px;height:150px;" alt="...">
+            </div>
+            <div class="col-lg-6 col-sm-12">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Miembro desde: </li>
+                    <li class="list-group-item">Vence: </li>
+                    {% if profile.active %}
+                    <li>
+                        <img src="{% static '/apavelas/active.jpg' %}" width="75" height="75" alt="">
+                    </li>
+                    {% else %} 
+                    <li>
+                        <img src="{% static '/apavelas/inactive.jpg' %}" width="75" height="75" alt="">
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

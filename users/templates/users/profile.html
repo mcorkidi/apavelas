@@ -1,0 +1,107 @@
+{% extends 'apavelas/base.html' %}
+{% block body %}
+{% load static %}
+
+<div class="container d-flex justify-content-center">
+    <div class="row">
+        <div class="col-lg-6 col-sm-12">
+            <div class="p-2 shadow rounded mb-2 mt-3 text-center">
+                
+                <img src="{{ profile.image.url }}" class="img-thumbnail" alt="...">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %} 
+                   
+
+                   {{ form.as_p }}
+                 <input type="submit" value="Submit"> 
+                 
+                </form>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Usuario</span>
+                    <input disabled type="text" value="{{ user.username }}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Nombre</span>
+                    <input disabled type="text" value="{{ user.first_name }}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Apellido</span>
+                    <input disabled type="text" value="{{ user.last_name }}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
+                    <input disabled type="text" value="{{ user.email }}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Telefono</span>
+                    <input disabled type="text" value="{{ profile.telefone }}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Deporte</span>
+                    <input disabled type="text" value="{{ profile.sport }}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Status</span>
+                    <input disabled type="text" value="{% if profile.active %} Activo {% else %} Inactivo {% endif %}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-secondary">Edit</button>
+                </div>
+
+            
+            </div>    
+            
+
+        </div>
+        <div class="col-lg-6 col-sm-12 d-flex justify-content-center">
+            <div class="p-2 shadow rounded mb-2 mt-3 ml-3">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-header">
+                        Membresia APAVELAS
+                    </div>
+                    <img src="{{ profile.faceImage.url }}" class="card-img-top mw-150 mh-150" alt="...">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %} 
+                        
+                        
+                            {{ face_form.as_p }}
+                            <input type="submit" value="Submit"> 
+                            
+                                  
+                    </form>
+                    <div class="card-body">
+                    <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>
+                    <p class="card-text">Esta tarjeta representa una membresia activa en la Asociacion Panameña de Velas</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Miembro desde: </li>
+                    <li class="list-group-item">Vence: </li>
+                    <li class="list-group-item">Status: </li>
+                    </ul>
+                    <div class="card-body">
+                    <a href="{% url 'card' %}" class="card-link" target="blank">Ver Tarjeta</a>
+                    <a href="#" class="card-link">Descargar</a>
+                    </div>
+                    <div class="card-footer d-flex justify-content-center">
+                        <img src="/pictures/qrcodes/{{ profile.id }}.jpg" style="width:150px;height:150px;" alt="...">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Vendor JS Files -->
+    <script src="{% static 'apavelas/assets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+    <script src="{% static 'apavelas/assets/vendor/aos/aos.js' %}"></script>
+    <script src="{% static 'apavelas/assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'apavelas/assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static 'apavelas/assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'apavelas/assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'apavelas/assets/vendor/waypoints/noframework.waypoints.js' %}"></script>
+    <script src="{% static 'apavelas/assets/vendor/php-email-form/validate.js' %}"></script>
+  
+    <!-- Template Main JS File -->
+    <script src="{% static 'apavelas/assets/js/main.js' %}"></script>
+{% endblock %}

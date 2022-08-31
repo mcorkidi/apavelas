@@ -1,0 +1,82 @@
+{% extends 'apavelas/base.html' %}
+{% block body %}
+{% load static %}
+
+<div class="container d-flex justify-content-center" >
+    <div class="col-lg-8">
+    <form method="post">
+        {% csrf_token %} 
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Nombre</span>
+                    <input type="text" name="first_name" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Apellido</span>
+                    <input type="text"name="last_name" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
+                <input type="email" name="email" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Telefono</span>
+                <input type="tel" name="telephone" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Usuario</span>
+                <input type="text" name="username" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Contraseña</span>
+                <input type="password" name="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Contraseña Confirmar</span>
+                <input type="password" name="password1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+        </div>
+        
+        <div class="input-group mb-3" >
+            <select class="form-select" id="inputGroupSelect02" name="sport">
+            <option selected>Selecciona...</option>
+            <option value="kite">KiteSurf</option>
+            <option value="wing">WingSurf</option>
+            <option value="kitefoil">KiteFoil</option>
+            <option value="wing">WingFoil</option>
+            <option value="sail">Vela</option>
+            </select>
+            <label class="input-group-text" for="inputGroupSelect02">Deporte de Preferencia</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Registrarse</button>
+    </form>     
+  </div>
+</div>
+
+    <!-- Vendor JS Files -->
+    <script src="{% static 'apavelas/assets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+    <script src="{% static 'apavelas/assets/vendor/aos/aos.js' %}"></script>
+    <script src="{% static 'apavelas/assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'apavelas/assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static 'apavelas/assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'apavelas/assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'apavelas/assets/vendor/waypoints/noframework.waypoints.js' %}"></script>
+    <script src="{% static 'apavelas/assets/vendor/php-email-form/validate.js' %}"></script>
+  
+    <!-- Template Main JS File -->
+    <script src="{% static 'apavelas/assets/js/main.js' %}"></script>
+
+
+{% endblock %}
