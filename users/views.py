@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 import qrcode
 from django.conf import settings
-import os
+from os.path import exists
 from .forms import ProfileImageForm, FaceImageForm
 
 
@@ -14,46 +14,47 @@ from .forms import ProfileImageForm, FaceImageForm
 
 def register(request):
     if request.method == 'POST':
-        print(request.POST)
-        username = request.POST.get('username')
-        email =request.POST.get('email')
-        password = request.POST.get('password')
-        password1 = request.POST.get('password1')
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        telephone = request.POST.get('telephone')
-        sport = request.POST.get('sport')
-        if password != password1:
-            messages.error(request, 'Error, revisa que la contraseña sea igual a la confirmacion.')
-            return render(request, 'users/registration.html')
-        try:
-            newUser = User.objects.create_user(username, email, password)
-            newUser.first_name = first_name
-            newUser.last_name = last_name
-            newUser.save()
-        except:
-            messages.error(request, 'Error en el registro intenta nuevamente con otro usuario.')
-            return render(request, 'users/registration.html')
+        if 'register' in request.POST:
+            print(request.POST)
+            username = request.POST.get('username')
+            email =request.POST.get('email')
+            password = request.POST.get('password')
+            password1 = request.POST.get('password1')
+            first_name = request.POST.get('first_name')
+            last_name = request.POST.get('last_name')
+            telephone = request.POST.get('telephone')
+            sport = request.POST.get('sport')
+            if password != password1:
+                messages.error(request, 'Error, revisa que la contraseña sea igual a la confirmacion.')
+                return render(request, 'users/registration.html')
+            try:
+                newUser = User.objects.create_user(username, email, password)
+                newUser.first_name = first_name
+                newUser.last_name = last_name
+                newUser.save()
+            except:
+                messages.error(request, 'Error en el registro intenta nuevamente con otro usuario.')
+                return render(request, 'users/registration.html')
 
-        newProfile = Profile.objects.create(user=newUser, telephone=telephone, 
-        sport=sport)
-        newProfile.qrcode = f'{settings.BASE_HOST}{newProfile.id}' 
-        newProfile.save()
-        img = qrcode.make(f'{settings.BASE_HOST}{newProfile.id}')
+            newProfile = Profile.objects.create(user=newUser, telephone=telephone, 
+            sport=sport)
+            newProfile.qrcode = f'{settings.BASE_HOST}qrscan/{newProfile.id}' 
+            newProfile.save()
+            img = qrcode.make(f'{settings.BASE_HOST}qrscan/{newProfile.id}')
 
-        
-        img.save(f'{settings.MEDIA_ROOT}/qrcodes/{newProfile.id}.jpg')
+            
+            img.save(f'{settings.MEDIA_ROOT}/qrcodes/{newProfile.id}.jpg')
 
 
-        messages.success(request, 'Te registraste exitosamente, procede a iniciar la sesión.')
-        auth = authenticate(request, username=username, password=password)
-        if auth:
-            login(request, auth)
-            messages.success(request, f'Bienvenido {auth.first_name}, iniciaste tu sesión.')
-            return redirect('profile')
-        else:
-            messages.error(request, "Credenciales invalidos, intenta nuevamente.")
-            return redirect('index')
+            messages.success(request, 'Te registraste exitosamente, procede a iniciar la sesión.')
+            auth = authenticate(request, username=username, password=password)
+            if auth:
+                login(request, auth)
+                messages.success(request, f'Bienvenido {auth.first_name}, iniciaste tu sesión.')
+                return redirect('profile')
+            else:
+                messages.error(request, "Credenciales invalidos, intenta nuevamente.")
+                return redirect('index')
 
 
 
@@ -62,7 +63,15 @@ def register(request):
 @login_required
 def profile(request):
     profile = Profile.objects.filter(user = request.user)[0]
+    if exists(f"{settings.MEDIA_ROOT}/qrcodes/{profile.id}.jpg"):
+        ...
+    else:
+        profile.qrcode = f'{settings.BASE_HOST}qrscan/{profile.id}' 
+        profile.save()
+        img = qrcode.make(f'{settings.BASE_HOST}qrscan/{profile.id}')
 
+        
+        img.save(f'{settings.MEDIA_ROOT}/qrcodes/{profile.id}.jpg')
     if request.method == 'POST':
         print(request.POST)
     

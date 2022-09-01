@@ -71,12 +71,12 @@
                     </form>
                     <div class="card-body">
                     <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>
-                    <p class="card-text">Esta tarjeta representa una membresia activa en la Asociacion Panameña de Velas</p>
+                    <p class="card-text">Esta tarjeta representa una membresia en la Asociacion Panameña de Velas</p>
                     </div>
                     <ul class="list-group list-group-flush">
                     <li class="list-group-item">Miembro desde: </li>
                     <li class="list-group-item">Vence: </li>
-                    <li class="list-group-item">Status: </li>
+                    <li class="list-group-item">Status: {{ profile.memberSince }}</li>
                     </ul>
                     <div class="card-body">
                     <a href="{% url 'card' %}" class="card-link" target="blank">Ver Tarjeta</a>

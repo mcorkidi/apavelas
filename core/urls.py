@@ -27,7 +27,8 @@ urlpatterns = [
     path('profile/', user_views.profile, name='profile'),
     path('logout/', views.LogOutView, name='logout'),
     path('card/', views.card, name='card'),
-    path('<qrscan>', views.qrscan, name='qrscan')
+    path('qrscan/<qrscan>', views.qrscan, name='qrscan'),
+    path('members/', views.members, name='members')
 
 ]
 

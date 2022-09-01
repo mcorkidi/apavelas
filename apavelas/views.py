@@ -38,3 +38,10 @@ def qrscan(request, qrscan):
     profile = Profile.objects.filter(id=qrscan)[0]
     context = {'profile': profile}
     return render(request, 'apavelas/card.html', context)
+
+@login_required
+def members(request):
+    members = Profile.objects.all()
+    context = {'members' : members}
+
+    return render(request, 'apavelas/members.html', context)

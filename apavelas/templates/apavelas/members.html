@@ -1,0 +1,40 @@
+{% extends 'apavelas/base.html' %}
+{% block body %}
+{% load static %}
+
+<div class="container d-flex justify-content-center">
+
+       
+        <div class="col-lg-10 col-sm-12">
+            <div class="shadow rounded mt-2 p-1">
+                <table class="table table-bordered table-striped ">
+                    <thead>
+                        <tr>
+                            <th>Foto</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Correo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for member in members %} 
+                        <tr>
+                            <td><img src="{{ member.faceImage.url }}" class="img-thumbnail rounded" alt="..." style="height: 75px;"></td>
+                            <td>{{member.user.first_name}}</td>
+                            <td>{{member.user.last_name}}</td>
+                            <td>{{member.user.email}}</td>
+                        </tr>
+
+                    
+                    
+                    {% endfor %} 
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+</div>
+
+
+
+{% endblock %}

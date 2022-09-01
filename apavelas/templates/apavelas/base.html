@@ -115,6 +115,10 @@
                       <a class="dropdown-item" href="{% url 'profile' %}">Perfil</a>
                     </li>
                     <li>
+                      <a class="dropdown-item" href="{% url 'members' %}">Miembros</a>
+                    </li>
+                    <hr>
+                    <li>
                       <a  class="dropdown-item" href="{% url 'logout' %}">Logout</a>
                     </li>
                   </ul>
@@ -142,7 +146,7 @@
                       </div>
                       <div class="row">
                         <div class="col-6"> 
-                          <button type="submit" class="btn btn-primary ">INICIAR SESIÓN</button>
+                          <button type="submit" name="login" class="btn btn-primary ">INICIAR SESIÓN</button>
                         </div>
                         <div class="col-6">
                           <a href="{% url 'register' %}"><button type="button" class="btn btn-secondary ">REGISTRO NUEVO</button></a>
