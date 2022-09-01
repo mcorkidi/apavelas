@@ -42,11 +42,8 @@ def register(request):
         img = qrcode.make(f'{settings.BASE_HOST}{newProfile.id}')
 
         
-        img.save(f'pictures/qrcodes/{newProfile.id}.jpg')
+        img.save(f'{settings.MEDIA_ROOT}/qrcodes/{newProfile.id}.jpg')
 
-
-        
-        
 
         messages.success(request, 'Te registraste exitosamente, procede a iniciar la sesión.')
         auth = authenticate(request, username=username, password=password)
