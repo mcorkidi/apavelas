@@ -28,7 +28,11 @@ urlpatterns = [
     path('logout/', views.LogOutView, name='logout'),
     path('card/', views.card, name='card'),
     path('qrscan/<qrscan>', views.qrscan, name='qrscan'),
-    path('members/', views.members, name='members')
+    path('members/', views.members, name='members'),
+    path('benefits/', views.benefits, name='benefits'),
+    path('events/', views.events, name='events'),
+    path('places/', views.places, name='places'),
+    path('gallery/', views.gallery, name='gallery')
 
 ]
 

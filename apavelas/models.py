@@ -16,7 +16,7 @@ class Benefit(models.Model):
 
 
 
-class Places(models.Model):
+class Place(models.Model):
     name = models.CharField(max_length=255, blank=True, null=True)
     image = models.ImageField(default='place.jpg', upload_to='places')
     address = models.CharField(max_length=255, blank=True, null=True)
@@ -28,7 +28,7 @@ class Places(models.Model):
     type_of_place = models.CharField(max_length=255, blank=True, null=True)
  
 
-class Events(models.Model):
+class Event(models.Model):
     name = models.CharField(max_length=255, blank=True, null=True)
     image = models.ImageField(default='event.jpg', upload_to='events')
     address = models.CharField(max_length=255, blank=True, null=True)

@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 from users.models import Profile
+from .models import Benefit, Event, Place, Photo
 # Create your views here.
 
 def index(request):
@@ -45,3 +46,28 @@ def members(request):
     context = {'members' : members}
 
     return render(request, 'apavelas/members.html', context)
+
+def benefits(request):
+    benefits = Benefit.objects.all()
+
+    context = {'benefits': benefits}
+    return render(request, 'apavelas/benefits.html', context)
+
+def places(request):
+    places = Place.objects.all()
+
+    context = {'places', places}
+    return render(request, 'apavelas/places.html', context)
+
+def events(request):
+    events = Event.objects.all()
+
+    context = {'events': events}
+    return render(request, 'apavelas/events.html', context)
+
+def gallery(request):
+    photos = Photo.objects.all()
+
+    context = {'photos': photos}
+    return render(request, 'apavelas/gallery.html', context)
+
