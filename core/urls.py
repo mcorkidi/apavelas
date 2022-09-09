@@ -31,7 +31,7 @@ urlpatterns = [
     path('members/', views.members, name='members'),
     path('benefits/', views.benefits, name='benefits'),
     path('events/', views.events, name='events'),
-    path('places/', views.places, name='places'),
+    path('places/<type_of_service>', views.places, name='places'),
     path('gallery/', views.gallery, name='gallery')
 
 ]

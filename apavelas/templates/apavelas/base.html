@@ -61,9 +61,9 @@
                       ACERCA
                     </a>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">Acerca de APAVELAS</a></li>
-                      <li><a class="dropdown-item" href="#">Nuestra Vision</a></li>
-                      <li><a class="dropdown-item" href="#team">Junta Directiva</a></li>
+                      <li><a class="dropdown-item" href="{% url 'index' %}#about">Acerca de APAVELAS</a></li>
+                      <li><a class="dropdown-item" href="{% url 'index' %}#about">Nuestra Vision</a></li>
+                      <li><a class="dropdown-item" href="{% url 'index' %}#team">Junta Directiva</a></li>
                       
                     </ul>
                 </li>
@@ -84,22 +84,22 @@
                     SERVICIOS
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">ESCUELAS KITE</a></li>
-                  <li><a class="dropdown-item" href="#">ESCUELAS VELA</a></li>
-                  <li><a class="dropdown-item" href="#">SPOTS</a></li>
-                  <li><a class="dropdown-item" href="#">HOTELES</a></li>
-                  <li><a class="dropdown-item" href="#">RESTAURANTES</a></li>
-                  <li><a class="dropdown-item" href="#">MEDICOS</a></li>
+                  <li><a class="dropdown-item" href="{% url 'places' type_of_service='ESCUELAS KITE' %}">ESCUELAS KITE</a></li>
+                  <li><a class="dropdown-item" href="{% url 'places' type_of_service='ESCUELAS VELA' %}">ESCUELAS VELA</a></li>
+                  <li><a class="dropdown-item" href="{% url 'places' type_of_service='SPOTS' %}">SPOTS</a></li>
+                  <li><a class="dropdown-item" href="{% url 'places' type_of_service='HOTELES' %}">HOTELES</a></li>
+                  <li><a class="dropdown-item" href="{% url 'places' type_of_service='RESTAURANTES' %}">RESTAURANTES</a></li>
+                  <li><a class="dropdown-item" href="{% url 'places' type_of_service='MEDICOS' %}">MEDICOS</a></li>
                 </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">BENEFICIOS</a>
+                    <a class="nav-link" href="{% url 'benefits' %}">BENEFICIOS</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">EVENTOS</a>
+                    <a class="nav-link" href="{% url 'events' %}">EVENTOS</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">GALERIA</a>
+                    <a class="nav-link" href="{% url 'gallery'%}">GALERIA</a>
                 </li>                                                 
                 
                 
@@ -193,7 +193,7 @@
       <div class="row justify-content-center">
         <div class="col-lg-6">
           <h4>Inscribite a nuestra lista de contactos.</h4>
-          <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
+          <p>Enterate de novedades y eventos. </p>
           <form action="" method="post">
             <input type="email" name="email"><input type="submit" value="Subscribe">
           </form>
@@ -213,39 +213,40 @@
             Republica de Panama<br>
             Centro America <br><br>
             <strong>Phone:</strong> +1 5589 55488 55<br>
-            <strong>Email:</strong> info@example.com<br>
+            <strong>Email:</strong> info@apavelas.com<br>
           </p>
         </div>
 
         <div class="col-lg-3 col-md-6 footer-links">
           <h4>Useful Links</h4>
           <ul>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'index' %}">Inicio</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'index' %}#about">Acerca</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'index' %}#featured-services">Servicios</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="#">Terminos de servicio</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="#">Politica de privacidad</a></li>
           </ul>
         </div>
 
         <div class="col-lg-3 col-md-6 footer-links">
-          <h4>Our Services</h4>
+          <h4>Servicios</h4>
           <ul>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'places' type_of_service='ESCUELAS KITE' %}">ESCUELAS KITE</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'places' type_of_service='ESCUELAS VELA' %}">ESCUELAS VELA</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'places' type_of_service='SPOTS' %}">SPOTS</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'places' type_of_service='HOTELES' %}">HOTELES</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'places' type_of_service='RESTAURANTES' %}">RESTAURANTES</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'places' type_of_service='MEDICOS' %}">MEDICOS</a></li>
           </ul>
         </div>
 
         <div class="col-lg-3 col-md-6 footer-links">
-          <h4>Our Social Networks</h4>
-          <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>
+          <h4>Nuestras Redes Sociales</h4>
+          <p>Enterate y comunicate con nosotros.</p>
           <div class="social-links mt-3">
             <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
             <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-            <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+            <a href="https://instagram.com/apk_panama?igshid=YmMyMTA2M2Y=" class="instagram"><i class="bx bxl-instagram"></i></a>
             <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
             <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
           </div>

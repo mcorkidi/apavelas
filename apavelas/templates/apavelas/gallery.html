@@ -2,6 +2,18 @@
 {% block body %}
 {% load static %}
 
+<div class="container">
+    <div class="row">
+        <div class="col-md-11"><div class="p-2 shadow rounded mb-2 mt-2"><h1>Galeria</h1></div></div>
+        {% if request.user.is_staff %}
+        <div class="col-md-1"><br><a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="new" name="new">Nuevo</a></div>
+        {% endif %} 
+        
+    </div>
+
+
+    
+</div>
 
 
 

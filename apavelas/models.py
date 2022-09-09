@@ -4,45 +4,45 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Benefit(models.Model):
-    name = models.CharField(max_length=255, blank=True, null=True)
-    image = models.ImageField(default='benefit.jpg', upload_to='benefits')
-    address = models.CharField(max_length=255, blank=True, null=True)
-    telephone = models.CharField(max_length=15, blank=True, null=True)
+    nombre = models.CharField(max_length=255, blank=True, null=True)
+    imagen = models.ImageField(default='benefits/benefit.jpg', upload_to='benefits')
+    direccion = models.CharField(max_length=255, blank=True, null=True)
+    telefono = models.CharField(max_length=15, blank=True, null=True)
     email = models.EmailField(max_length=255, blank=True, null=True)
-    website = models.URLField(blank=True, null=True)
-    description = models.CharField(max_length=255, blank=True, null=True)
-    created_date = models.DateField(auto_now_add=True)
-    expiration_date = models.DateField(blank=True, default=datetime.now)
+    sitioweb = models.URLField(blank=True, null=True)
+    descripcion = models.CharField(max_length=255, blank=True, null=True)
+    fecha_creada = models.DateField(auto_now_add=True)
+    fecha_expiracion = models.DateField(blank=True, default=datetime.now)
 
 
 
 class Place(models.Model):
-    name = models.CharField(max_length=255, blank=True, null=True)
-    image = models.ImageField(default='place.jpg', upload_to='places')
-    address = models.CharField(max_length=255, blank=True, null=True)
-    telephone = models.CharField(max_length=15, blank=True, null=True)
+    nombre = models.CharField(max_length=255, blank=True, null=True)
+    imagen = models.ImageField(default='places/place.jpg', upload_to='places')
+    direccion = models.CharField(max_length=255, blank=True, null=True)
+    telefono = models.CharField(max_length=15, blank=True, null=True)
     email = models.EmailField(max_length=255, blank=True, null=True)
-    website = models.URLField(blank=True, null=True)
-    description = models.CharField(max_length=255, blank=True, null=True)
+    sitioweb = models.URLField(blank=True, null=True)
+    descripcion = models.CharField(max_length=255, blank=True, null=True)
     created_date = models.DateField(auto_now_add=True)
-    type_of_place = models.CharField(max_length=255, blank=True, null=True)
+    tipo_de_sitio = models.CharField(max_length=255, blank=True, null=True)
  
 
 class Event(models.Model):
-    name = models.CharField(max_length=255, blank=True, null=True)
-    image = models.ImageField(default='event.jpg', upload_to='events')
-    address = models.CharField(max_length=255, blank=True, null=True)
-    telephone = models.CharField(max_length=15, blank=True, null=True)
+    nombre = models.CharField(max_length=255, blank=True, null=True)
+    imagen = models.ImageField(default='events/event.jpg', upload_to='events')
+    direccion = models.CharField(max_length=255, blank=True, null=True)
+    telefono = models.CharField(max_length=15, blank=True, null=True)
     email = models.EmailField(max_length=255, blank=True, null=True)
-    website = models.URLField(blank=True, null=True)
-    description = models.CharField(max_length=255, blank=True, null=True)
+    sitioweb = models.URLField(blank=True, null=True)
+    descripcion = models.CharField(max_length=255, blank=True, null=True)
     created_date = models.DateField(auto_now_add=True)
-    date = models.DateField(blank=True, default=datetime.now)
+    fecha_de_evento = models.DateField(blank=True, default=datetime.now)
 
 class Photo(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    image = models.ImageField(default='photo.jpg', upload_to='photos')
-    descrition = models.CharField(max_length=255, blank=True, null=True)
+    imagen = models.ImageField(default='photos/photo.jpg', upload_to='photos')
+    descripcion = models.CharField(max_length=255, blank=True, null=True)
 
 
 

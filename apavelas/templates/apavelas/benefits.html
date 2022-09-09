@@ -4,4 +4,67 @@
 
 
 
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-11"><div class="p-2 shadow rounded mb-2 mt-2"><h1>BENEFICIOS</h1></div></div>
+        {% if request.user.is_staff %}
+        <div class="col-md-1"><br><a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="new" name="new">Nuevo</a></div>
+        {% endif %} 
+        
+    </div>
+
+
+
+    <div id="staticBackdrop" class="modal fade" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content p-3">
+                
+
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>   
+                        <form enctype="multipart/form-data"  method="post">
+                            {% csrf_token %}
+                            <h2>Nuevo Beneficio</h2>
+                            {{ form.as_p }}
+                            <div class="d-flex justify-content-end">
+                            <button class="btn btn-primary" type="submit">Guardar</button>
+                            </div>
+                        </form>
+
+                        
+            </div>
+        </div>
+    </div><br>
+    <div class="row row-cols-1 row-cols-md-2 g-4 d-flex justify-content-center">
+        {% for benefit in benefits %} 
+        
+        <div class="card m-3 " style="max-width: 540px;">
+            <div class="row g-0">
+            <div class="col-md-4">
+                <img src="{{benefit.imagen.url}}" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                <h5 class="card-title">{{benefit.nombre}}</h5>
+                <p class="card-text">{{benefit.descripcion}}<br>Direccion: {{benefit.direccion}}</p>
+                <a href="{{benefit.sitioweb}}" target="_blank" rel="noopener noreferrer">Web: {{place.sitioweb}}</a><br>
+                <a href="mailto:{{place.email}}">Email: {{benefit.email}}</a><br>
+                <a href="tel:+{{place.telefono}}">Tel: {{benefit.telefono}}</a><br>
+                <p class="card-text">Expira: {{benefit.fecha_expiracion}}</p>
+
+                <p class="card-text"><small class="text-muted">Creado: {{benefit.fecha_creada}}</small></p>
+
+                </div>
+            </div>
+            </div>
+        </div>
+
+        {% endfor %} 
+    </div>
+
+
+</div>
+
 {% endblock %}
