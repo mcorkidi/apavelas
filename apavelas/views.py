@@ -121,8 +121,13 @@ def gallery(request):
     if request.method == 'POST':
         if 'login' in request.POST:
             authentication(request)
+        if 'new' in request.POST:
+            form = GalleryForm(request.POST, request.FILES)
+            
+            if form.is_valid:
+                form.save()
     
-    form = GalleryForm()
+    form = GalleryForm(initial={'uploader': request.user.username})
     context = {'photos': photos, 'form': form}
     return render(request, 'apavelas/gallery.html', context)
 

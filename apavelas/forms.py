@@ -29,4 +29,10 @@ class GalleryForm(forms.ModelForm):
     class Meta:
         model=Photo
         fields='__all__'
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["uploader"].disabled = True
+        # # Or to set READONLY
+        # self.fields["slug"].widget.attrs["readonly"] = True
 

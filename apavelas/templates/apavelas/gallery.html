@@ -2,17 +2,71 @@
 {% block body %}
 {% load static %}
 
+<style>
+body {
+    background-color: black;
+    }
+</style>
 <div class="container">
     <div class="row">
-        <div class="col-md-11"><div class="p-2 shadow rounded mb-2 mt-2"><h1>Galeria</h1></div></div>
+        <div class="col-md-11"><div class="p-2 shadow rounded mb-2 mt-2 bg-light"><h1>Galeria</h1></div></div>
         {% if request.user.is_staff %}
         <div class="col-md-1"><br><a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="new" name="new">Nuevo</a></div>
         {% endif %} 
         
     </div>
 
+    <div id="staticBackdrop" class="modal fade" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content p-3">
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div> 
+                <form method="post" enctype='multipart/form-data'>
+                    {% csrf_token%} 
+                    <table class="table">
+                        <tr><td> Subida por: {{form.uploader}}</td></tr>
+                     <tr> <td> Titulo: {{form.titulo}}</td></tr>
+                     <tr> <td>Imagen: {{form.imagen}} </td> </tr>
+                     <tr> <td>Descripcion: {{form.descripcion}}</td>  </tr>
+                    
+                    
+                    
+                    </table>
+                    <div class="d-flex justify-content-end"><button type="submit" class="btn btn-primary" name="new" class="form-control-submit-button">Guardar</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
 
-    
+   
+    <div class="row d-flex flex-wrap align-items-center">
+        {% for photo in photos %} 
+        <div class="col-4">
+            <img src="" alt="" style="width: 400px;"> 
+            <div class="card bg-dark text-white" >
+                <img src="{{photo.imagen.url}}" class="card-img" alt="...">
+                {% if photo.titulo == None %} 
+                  {%else%} 
+                  <div class="card-header">
+                  <h5 class="card-title"style="background-color:black;opacity:0.4;">{{photo.titulo}}</h5>
+                </div>
+                  {% endif %}
+                
+                <div class="card-img-overlay" >
+                    
+                  {% if photo.descripcion == None %} 
+                  {%else%} 
+                  <p class="card-text" style="background-color:black;opacity:0.4;">{{photo.descripcion}}</p>
+                  {% endif %}
+                  
+                </div>
+              </div>
+            <div class="card-footer"><p class="card-text muted bg-secondary rounded" >Creada: {{photo.created_date}} Por: {{photo.uploader}}</p></div>
+        </div>
+        {% endfor %} 
+        
+    </div>
 </div>
 
 

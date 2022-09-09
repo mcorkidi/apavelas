@@ -40,9 +40,11 @@ class Event(models.Model):
     fecha_de_evento = models.DateField(blank=True, default=datetime.now)
 
 class Photo(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    uploader = models.CharField(max_length=255, blank=True, null=True)
     imagen = models.ImageField(default='photos/photo.jpg', upload_to='photos')
+    titulo = models.CharField(max_length=50, blank=True, null=True)
     descripcion = models.CharField(max_length=255, blank=True, null=True)
+    created_date = models.DateField(auto_now_add=True)
 
 
 
