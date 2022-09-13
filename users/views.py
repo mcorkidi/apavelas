@@ -1,3 +1,4 @@
+from pickletools import optimize
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from users.models import Profile
@@ -8,6 +9,9 @@ import qrcode
 from django.conf import settings
 from os.path import exists
 from .forms import ProfileImageForm, FaceImageForm
+from PIL import Image, ExifTags
+from io import BytesIO
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
 
 # Create your views here.
@@ -62,7 +66,8 @@ def register(request):
 
 @login_required
 def profile(request):
-    profile = Profile.objects.filter(user = request.user)[0]
+    print(request.user)
+    profile = Profile.objects.get(user = User.objects.get(username=request.user))
     if exists(f"{settings.MEDIA_ROOT}/qrcodes/{profile.id}.jpg"):
         ...
     else:
@@ -79,12 +84,46 @@ def profile(request):
         form=ProfileImageForm(request.POST, request.FILES)
         face_form = FaceImageForm(request.POST, request.FILES)
         if form.is_valid():
+            
+
             img = form.cleaned_data.get('foto_perfil')
-            profile.image=img
+            optImage = Image.open(img)
+            for orientation in ExifTags.TAGS.keys() :
+                    if ExifTags.TAGS[orientation]=='Orientation' : break
+            exif=dict(optImage._getexif().items())
+            if exif[orientation] == 3 :
+                optImage=optImage.rotate(180, expand=True)
+            elif exif[orientation] == 6 :
+                optImage=optImage.rotate(270, expand=True)
+            elif exif[orientation] == 8 :
+                optImage=optImage.rotate(90, expand=True)
+            thumb_io = BytesIO()
+            optImage.save(thumb_io, format='JPEG', quality=50)
+            
+            inmemory_uploaded_file = InMemoryUploadedFile(thumb_io, None, f'{profile.user.username}_profile.jpeg', 
+                                              'image/jpeg', thumb_io.tell(), None)
+            
+            profile.image = inmemory_uploaded_file
             profile.save()
+
         if face_form.is_valid():
+           
             face_img = face_form.cleaned_data.get('foto_tarjeta')
-            profile.faceImage=face_img
+            optImage = Image.open(face_img)
+            for orientation in ExifTags.TAGS.keys() :
+                    if ExifTags.TAGS[orientation]=='Orientation' : break
+            exif=dict(optImage._getexif().items())
+            if exif[orientation] == 3 :
+                optImage=optImage.rotate(180, expand=True)
+            elif exif[orientation] == 6 :
+                optImage=optImage.rotate(270, expand=True)
+            elif exif[orientation] == 8 :
+                optImage=optImage.rotate(90, expand=True)
+            thumb_io = BytesIO()
+            optImage.save(thumb_io, format='JPEG', quality=50)
+            inmemory_uploaded_file = InMemoryUploadedFile(thumb_io, None, f'{profile.user.username}_face.jpeg', 
+                                              'image/jpeg', thumb_io.tell(), None)
+            profile.faceImage = inmemory_uploaded_file
             profile.save()
     else:
         form = ProfileImageForm()
