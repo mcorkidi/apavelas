@@ -62,7 +62,18 @@ body {
                   
                 </div>
               </div>
-            <div class="card-footer"><p class="card-text muted bg-secondary rounded" >Creada: {{photo.created_date}} Por: {{photo.uploader}}</p></div>
+            <div class="card-footer">
+                <p class="card-text muted bg-secondary rounded" >Creada: {{photo.created_date}} Por: {{photo.uploader}}</p>
+                {% if request.user.is_staff %}
+                
+                    <form method="post">
+                        {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-secondary" name="delete" value="{{photo.id}}">Delete</button>
+                    </form>
+               
+                {%endif %} 
+              
+            </div>
         </div>
         {% endfor %} 
         

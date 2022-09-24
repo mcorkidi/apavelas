@@ -10,9 +10,9 @@ class BenefitForm(forms.ModelForm):
 
 
 class PlacesForm(forms.ModelForm):
-    CHOICES = [('ESCUELAS KITE', 'ESCUELAS KITE'), ('ESCUELAS VELA', 'ESCUELAS VELA'), 
-    ('SPOTS', 'SPOTS'), ('4', 'HOTELES'), 
-    ('5', 'RESTAURANTES'), ('6', 'MEDICOS')]
+    CHOICES = [('ESCUELAS', 'ESCUELAS'), ('TIENDAS', 'TIENDAS'), 
+    ('SPOTS', 'SPOTS'), ('HOTELES', 'HOTELES'), 
+    ('RESTAURANTES', 'RESTAURANTES'), ('MEDICOS', 'MEDICOS')]
     class Meta:
         model=Place
         fields= '__all__'
@@ -33,5 +33,12 @@ class GalleryForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["uploader"].disabled = True
+
+class TransactionForm(forms.ModelForm):
+    class Meta:
+        model=Transaction
+        fields='__all__'
+
+
        
 

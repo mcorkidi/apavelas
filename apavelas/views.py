@@ -71,16 +71,20 @@ def members(request):
     return render(request, 'apavelas/members.html', context)
 
 def benefits(request):
-    benefits = Benefit.objects.all()
+    
     if request.method == 'POST':
         print(request.POST)
         if 'login' in request.POST:
             authentication(request)
         form = BenefitForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            
-
+        if 'new' in request.POST:
+            if form.is_valid():
+                form.save()
+        if 'delete' in request.POST:
+            print('delete' , request.POST)
+            toBeDeleted = Benefit.objects.get(id=request.POST.get('delete'))
+            toBeDeleted.delete()
+    benefits = Benefit.objects.all()
     form = BenefitForm()
     context = {'benefits': benefits, 'form': form}
     return render(request, 'apavelas/benefits.html', context)
@@ -95,6 +99,10 @@ def places(request, type_of_service):
             if form.is_valid:
                 
                 form.save()
+        if 'delete' in request.POST:
+            print('delete' , request.POST)
+            toBeDeleted = Place.objects.get(id=request.POST.get('delete'))
+            toBeDeleted.delete()
 
             
     form = PlacesForm()
@@ -112,6 +120,10 @@ def events(request):
             form=EventsForm(request.POST, request.FILES)
             if form.is_valid:
                 form.save()
+        if 'delete' in request.POST:
+            print('delete' , request.POST)
+            toBeDeleted = Event.objects.get(id=request.POST.get('delete'))
+            toBeDeleted.delete()
     form = EventsForm()
     context = {'events': events, 'form': form}
     return render(request, 'apavelas/events.html', context)
@@ -126,9 +138,40 @@ def gallery(request):
             
             if form.is_valid:
                 form.save()
+        if 'delete' in request.POST:
+            print('delete' , request.POST)
+            toBeDeleted = Photo.objects.get(id=request.POST.get('delete'))
+            toBeDeleted.delete()
     
     form = GalleryForm(initial={'uploader': request.user.username})
     context = {'photos': photos, 'form': form}
     return render(request, 'apavelas/gallery.html', context)
 
+@login_required
+def accounting(request):
+    form = TransactionForm()
 
+    if request.method == 'POST':
+        if 'new' in request.POST:
+            form = TransactionForm(request.POST)
+            if form.is_valid:
+                form.save()
+    # bankAccounts = Bank.objects.all()
+    transactions = Transaction.objects.all().order_by('-fecha')
+    income = []
+    expenses = []
+    
+    balance = 0
+    for i in transactions:
+        if i.type_of_transaction == 'INGRESO':
+            balance += i.amount
+            income.append(i)
+        if i.type_of_transaction == 'GASTO':
+            balance -= i.amount
+            expenses.append(i)
+    
+
+
+    context = {'form': form, 'balance': balance, 'transactions':transactions,
+    'income':income, 'expenses':expenses}
+    return render(request, "apavelas/accounting.html", context)

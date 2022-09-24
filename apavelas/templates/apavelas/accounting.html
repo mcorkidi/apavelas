@@ -1,0 +1,155 @@
+{% extends 'apavelas/base.html' %}
+{% block body %}
+{% load static %}
+
+<div class="container">
+    <div class="row mx-auto justify-content-center">
+        <div class="col-md-6 col-sm-11"><div class="p-2 shadow rounded mb-2 mt-2"><h1>Contabilidad</h1></div></div>
+        {% if request.user.username ==  "mcorkidi" %}
+        <div class="col-md-1 col-sm-1"><br><a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="new" name="new">Nuevo </a></div>
+       
+        {% endif %} 
+        
+    </div>
+
+    <div id="staticBackdrop" class="modal fade" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content p-3">
+                
+
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>   
+                        <form method="post">
+                            {% csrf_token %}
+                            <h2>Nuevo Ingreso</h2>
+                            {{ form.as_p }}
+                            <div class="d-flex justify-content-end">
+                            <button class="btn btn-primary" type="submit" name="new">Guardar</button>
+                            </div>
+                        </form>
+
+                        
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-7 col-sm-12 p-2 shadow rounded mb-2 mt-2 justify-content-center mx-auto"><h4>Balance: ${{balance}}</h4></div>
+
+    <div class="col-lg-7 col-sm-12 justify-content-center mx-auto">
+        <div class="accordion " id="accordionFlushExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse" aria-expanded="false" aria-controls="flush-collapseOne">
+                    Transacciones
+                    </button>
+                </h2>
+                <div id="flush-collapse" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                
+                    <div class="accordion-body">
+                        
+                            
+                        <table class="table">
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Descripcion</th>
+                                <th>Amount</th>
+                            </tr>
+                            {% for t in transactions %} 
+                
+                            <tr>
+                                <td>{{t.fecha}}</td>
+                                <td>{{t.descripcion}}</td>
+                                {% if t.type_of_transaction == 'INGRESO' %}
+                                <td>+{{t.amount}} </td>
+                                {% else %} 
+                                <td>-{{t.amount}}</td>
+                                {% endif %} 
+                            </tr>
+                            {% endfor %} 
+                        </table>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse1" aria-expanded="false" aria-controls="flush-collapseOne">
+                    Ingresos
+                    </button>
+                </h2>
+                <div id="flush-collapse1" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                
+                    <div class="accordion-body">
+                        <table class="table">
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Cuenta</th>
+                                <th>Descripcion</th>
+                                <th>Amount</th>
+                            </tr>
+                            {% for i in income %} 
+                
+                            <tr>
+                                <td>{{i.fecha}}</td>
+                                <td>{{i.account.name}}</td>
+                                <td>{{i.descripcion}}</td>
+                                <td>{{i.amount}} </td>
+                                
+                            </tr>
+                            {% endfor %} 
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse2" aria-expanded="false" aria-controls="flush-collapseOne">
+                    Gastos
+                    </button>
+                </h2>
+                <div id="flush-collapse2" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                
+                    <div class="accordion-body">
+                        <div class="accordion-body">
+                            <table class="table">
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Descripcion</th>
+                                    <th>Amount</th>
+                                </tr>
+                                {% for i in expenses %} 
+                    
+                                <tr>
+                                    <td>{{i.fecha}}</td>
+                                    <td>{{i.descripcion}}</td>
+                                    
+                                    <td>{{i.amount}} </td>
+                                    
+                                </tr>
+                                {% endfor %} 
+                            </table>
+    
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+
+    
+
+
+</div>
+
+
+
+{% endblock %} 

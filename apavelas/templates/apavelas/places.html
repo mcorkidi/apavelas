@@ -72,14 +72,21 @@
             </div>
             <div class="col-md-8">
                 <div class="card-body">
-                <h5 class="card-title">{{place.nombre}}</h5>
-                <p class="card-text">{{place.descripcion}}<br>Direccion: {{place.direccion}}</p>
-                <a href="{{place.sitioweb}}" target="_blank" rel="noopener noreferrer">Web: {{place.sitioweb}}</a><br>
-                <a href="mailto:{{place.email}}">Email: {{place.email}}</a><br>
-                <a href="tel:+{{place.telefono}}">Tel: {{place.telefono}}</a>
-                <p class="card-text"><small class="text-muted">Creado: {{place.created_date}}</small></p>
-
+                    <h5 class="card-title">{{place.nombre}}</h5>
+                    <p class="card-text">{{place.descripcion}}<br>Direccion: {{place.direccion}}</p>
+                    <a href="{{place.sitioweb}}" target="_blank" rel="noopener noreferrer">Web: {{place.sitioweb}}</a><br>
+                    <a href="mailto:{{place.email}}">Email: {{place.email}}</a><br>
+                    <a href="tel:+{{place.telefono}}">Tel: {{place.telefono}}</a>
+                    <p class="card-text"><small class="text-muted">Creado: {{place.created_date}}</small></p>
                 </div>
+                {% if request.user.is_staff %}
+                <div class="card-footer">
+                    <form method="post">
+                        {% csrf_token %}
+                    <button type="submit" class="btn btn-sm" name="delete" value="{{place.id}}">Delete</button>
+                    </form>
+                </div>
+                {%endif %} 
             </div>
             </div>
         </div>

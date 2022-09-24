@@ -48,3 +48,48 @@ class Photo(models.Model):
 
 
 
+class Bank(models.Model):
+    number = models.IntegerField()
+    name = models.CharField(max_length=255, blank=True, null=True)
+    
+
+    def __str__(self):
+        return self.name
+
+class Account(models.Model):
+    number = models.IntegerField()
+    name = models.CharField(max_length=255, blank=True, null=True)
+   
+
+    def __str__(self):
+        return self.name
+
+
+class Transaction(models.Model):
+    fecha = models.DateTimeField(default=datetime.now)
+    descripcion = models.CharField(max_length=255, blank=True, null=True)
+    bank = models.ForeignKey(Bank, on_delete=models.CASCADE)
+    amount = models.FloatField(default=0.0)
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    INCOME = 'INGRESO'
+    EXPENSE = 'GASTO'
+    
+    TYPE_CHOICES = [
+        (INCOME, 'INGRESO'),
+        (EXPENSE, 'GASTO'),
+        
+    ]
+    type_of_transaction = models.CharField(
+        max_length=7,
+        choices=TYPE_CHOICES,
+        default=INCOME,
+    )
+   
+
+    def __str__(self):
+        return self.descripcion
+
+
+
+
+

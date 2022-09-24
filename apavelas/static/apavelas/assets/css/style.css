@@ -646,6 +646,7 @@ section {
 .clients {
   padding: 15px 0;
   text-align: center;
+  background-color:#d9e8fa92;
 }
 
 .clients img {

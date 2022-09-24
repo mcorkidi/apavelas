@@ -32,7 +32,8 @@ urlpatterns = [
     path('benefits/', views.benefits, name='benefits'),
     path('events/', views.events, name='events'),
     path('places/<type_of_service>', views.places, name='places'),
-    path('gallery/', views.gallery, name='gallery')
+    path('gallery/', views.gallery, name='gallery'),
+    path('accounting/', views.accounting, name='accounting')
 
 ]
 

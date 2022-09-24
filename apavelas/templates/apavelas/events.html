@@ -54,6 +54,14 @@
                 <p class="card-text"><small class="text-muted">Creado: {{event.created_date}}</small></p>
 
                 </div>
+                {% if request.user.is_staff %}
+                <div class="card-footer">
+                    <form method="post">
+                        {% csrf_token %}
+                    <button type="submit" class="btn btn-sm" name="delete" value="{{event.id}}">Delete</button>
+                    </form>
+                </div>
+                {%endif %} 
             </div>
             </div>
         </div>
