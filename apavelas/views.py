@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 from users.models import Profile
@@ -148,6 +149,7 @@ def gallery(request):
     return render(request, 'apavelas/gallery.html', context)
 
 @login_required
+@staff_member_required
 def accounting(request):
     form = TransactionForm()
 

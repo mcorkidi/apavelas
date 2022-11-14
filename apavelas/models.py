@@ -14,6 +14,9 @@ class Benefit(models.Model):
     fecha_creada = models.DateField(auto_now_add=True)
     fecha_expiracion = models.DateField(blank=True, default=datetime.now)
 
+    def __str__(self):
+        return self.nombre
+
 
 
 class Place(models.Model):
@@ -84,7 +87,8 @@ class Transaction(models.Model):
         choices=TYPE_CHOICES,
         default=INCOME,
     )
-   
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
+
 
     def __str__(self):
         return self.descripcion

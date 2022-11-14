@@ -48,10 +48,14 @@
             <div class="col-md-8">
                 <div class="card-body">
                 <h5 class="card-title">{{benefit.nombre}}</h5>
+                <br>
                 <p class="card-text">{{benefit.descripcion}}<br>Direccion: {{benefit.direccion}}</p>
-                <a href="{{benefit.sitioweb}}" target="_blank" rel="noopener noreferrer">Web: {{place.sitioweb}}</a><br>
-                <a href="mailto:{{place.email}}">Email: {{benefit.email}}</a><br>
-                <a href="tel:+{{place.telefono}}">Tel: {{benefit.telefono}}</a><br>
+                <br>
+                {% if benefit.sitioweb != "" %}
+                SitioWeb: <a href="{{benefit.sitioweb}}" target="_blank" rel="noopener noreferrer">{{benefit.sitioweb}}</a><br>
+                {% endif %}
+                Email: <a href="mailto:{{place.email}}">{{benefit.email}}</a><br>
+                Tel: <a href="tel:+{{place.telefono}}">{{benefit.telefono}}</a><br>
                 <p class="card-text">Expira: {{benefit.fecha_expiracion}}</p>
 
                 <p class="card-text"><small class="text-muted">Creado: {{benefit.fecha_creada}}</small></p>

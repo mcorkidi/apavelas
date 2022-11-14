@@ -16,6 +16,7 @@ class Profile(models.Model):
     memberSince = models.DateField(blank=True, default=datetime.now)
     validTo = models.DateField(blank=True, default=datetime.now)
     qrcode = models.CharField(max_length=200, blank=True, default="")
+    
 
     
 

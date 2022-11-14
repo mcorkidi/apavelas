@@ -19,7 +19,7 @@
                     <tbody>
                     {% for member in members %} 
                         <tr>
-                            <td><img src="{{ member.faceImage.url }}" class="img-thumbnail rounded" alt="..." style="height: 75px;"></td>
+                            <td><img src="{{ member.image.url }}" class="img-thumbnail rounded" alt="..." style="height: 75px;"></td>
                             <td>{{member.user.first_name}}</td>
                             <td>{{member.user.last_name}}</td>
                             <td>{{member.user.email}}</td>

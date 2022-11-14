@@ -53,7 +53,8 @@
                             <tr>
                                 <th>Fecha</th>
                                 <th>Descripcion</th>
-                                <th>Amount</th>
+                                <th>Monto</th>
+                                <th>Accion</th>
                             </tr>
                             {% for t in transactions %} 
                 
@@ -65,6 +66,7 @@
                                 {% else %} 
                                 <td>-{{t.amount}}</td>
                                 {% endif %} 
+                                <td><a class="btn">Editar</a> </td>
                             </tr>
                             {% endfor %} 
                         </table>
@@ -86,7 +88,8 @@
                                 <th>Fecha</th>
                                 <th>Cuenta</th>
                                 <th>Descripcion</th>
-                                <th>Amount</th>
+                                <th>Monto</th>
+                                <th>Accion</th>
                             </tr>
                             {% for i in income %} 
                 
@@ -95,6 +98,7 @@
                                 <td>{{i.account.name}}</td>
                                 <td>{{i.descripcion}}</td>
                                 <td>{{i.amount}} </td>
+                                <td><a class="btn">Editar</a></td>
                                 
                             </tr>
                             {% endfor %} 
@@ -118,7 +122,8 @@
                                 <tr>
                                     <th>Fecha</th>
                                     <th>Descripcion</th>
-                                    <th>Amount</th>
+                                    <th>Monto</th>
+                                    <th>Accion</th>
                                 </tr>
                                 {% for i in expenses %} 
                     
@@ -127,6 +132,7 @@
                                     <td>{{i.descripcion}}</td>
                                     
                                     <td>{{i.amount}} </td>
+                                    <td><a class="btn">Editar</a></td>
                                     
                                 </tr>
                                 {% endfor %} 
