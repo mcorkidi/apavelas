@@ -2,6 +2,7 @@ from pickletools import optimize
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from users.models import Profile
+from apavelas.models import Transaction
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -66,8 +67,9 @@ def register(request):
 
 @login_required
 def profile(request):
-    print(request.user)
+
     profile = Profile.objects.get(user = User.objects.get(username=request.user))
+    transactions = Transaction.objects.filter(user = User.objects.get(username=request.user))
     if exists(f"{settings.MEDIA_ROOT}/qrcodes/{profile.id}.jpg"):
         ...
     else:
@@ -131,7 +133,7 @@ def profile(request):
 
 
 
-    context = {'profile': profile, 'form':form, 'face_form':face_form}
+    context = {'profile': profile, 'form':form, 'face_form':face_form, 'transactions': transactions}
 
 
     return render(request, 'users/profile.html', context)

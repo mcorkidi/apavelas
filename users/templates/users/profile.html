@@ -4,7 +4,7 @@
 
 <div class="container d-flex justify-content-center">
     <div class="row">
-        <div class="col-lg-6 col-sm-12">
+        <div class="col-lg-4 col-sm-12">
             <div class="p-2 shadow rounded mb-2 mt-3 text-center">
                 
                 <img src="{{ profile.image.url }}" class="img-thumbnail rounded" alt="..." style="height: 400px;">
@@ -53,7 +53,7 @@
             
 
         </div>
-        <div class="col-lg-6 col-sm-12 d-flex justify-content-center">
+        <div class="col-lg-4 col-sm-12 d-flex justify-content-center">
             <div class="p-2 shadow rounded mb-2 mt-3 ml-3">
                 <div class="card" style="width: 18rem;">
                     <div class="card-header">
@@ -74,9 +74,13 @@
                     <p class="card-text">Esta tarjeta representa una membresia en la Asociacion Panameña de Velas</p>
                     </div>
                     <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Miembro desde: </li>
-                    <li class="list-group-item">Vence: </li>
-                    <li class="list-group-item">Status: {{ profile.memberSince }}</li>
+                    <li class="list-group-item">Miembro desde: {{ profile.memberSince }}</li>
+                    <li class="list-group-item">Vence: {{ profile.validTo }}</li>
+                    {% if profile.active %}
+                    <li class="list-group-item">Status: Activo</li>
+                    {%else %} 
+                    <li class="list-group-item">Status: No Activo</li>
+                    {%endif%} 
                     </ul>
                     <div class="card-body">
                     <a href="{% url 'card' %}" class="card-link" target="blank">Ver Tarjeta</a>
@@ -87,6 +91,29 @@
                     </div>
                 </div>
 
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12 d-flex justify-content-center p-2 shadow rounded mb-2 mt-3 ml-3">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Pagos</h3>
+                </div>
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <th>Fecha</th>
+                        <th>Descripcion</th>
+                        <th>Monto</th>
+                    </thead>
+                    <tbody>
+                        {% for transaction in transactions %}
+                            <tr>
+                                <td>{{transaction.fecha}}</td>
+                                <td>{{transaction.descripcion}}</td>
+                                <td>{{transaction.amount}}</td>
+                            </tr>
+                        {% endfor %} 
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

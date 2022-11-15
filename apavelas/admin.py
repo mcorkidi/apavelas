@@ -10,4 +10,5 @@ admin.site.register(Photo)
 
 admin.site.register(Bank)
 admin.site.register(Account)
+admin.site.register(Transaction)
 
