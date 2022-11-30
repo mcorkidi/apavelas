@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from users.models import Profile
 from apavelas.models import Transaction
+from apavelas.views import emailList
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -18,6 +19,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 # Create your views here.
 
 def register(request):
+    emailList(request)
     if request.method == 'POST':
         if 'register' in request.POST:
             print(request.POST)
@@ -71,7 +73,7 @@ def register(request):
 
 @login_required
 def profile(request):
-    
+    emailList(request)
     profile = Profile.objects.get(user = User.objects.get(username=request.user))
     transactions = Transaction.objects.filter(user = User.objects.get(username=request.user))
     if exists(f"{settings.MEDIA_ROOT}/qrcodes/{profile.id}.jpg"):
@@ -170,7 +172,7 @@ def profile(request):
                     editUser.email = email
                     editUser.first_name = first_name
                     editUser.last_name = last_name
-                    editUser.password = password
+                    editUser.set_password(password)
                     editUser.save()
                     editProfile = Profile.objects.get(user=editUser)
                     editProfile.telephone = telephone

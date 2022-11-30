@@ -11,6 +11,17 @@ from .forms import *
 from django.core.files.images import ImageFile
 # Create your views here.
 
+def emailList(request):
+    if request.method == 'POST':
+        if 'email_list' in request.POST:
+            email = request.POST.get('email_list')
+            if EmailList.objects.filter(email=email).exists():
+                messages.error(request, 'Correo ya esta en la lista.')
+            else:
+                EmailList.objects.create(email=email)
+                messages.success(request, 'Correo agregado correctamente.')
+        
+
 def authentication(request):
 
     if request.method == 'POST':
@@ -29,18 +40,19 @@ def authentication(request):
 
 
 def index(request):
-
+    emailList(request)
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        auth = authenticate(request, username=username, password=password)
-        if auth:
-            login(request, auth)
-            messages.success(request, f'Bienvenido {auth.first_name}, iniciaste tu sesión.')
-            return redirect('profile')
-        else:
-            messages.error(request, "Credenciales invalidos, intenta nuevamente.")
-            return redirect('index')
+        if 'login' in request.POST:
+            username = request.POST['username']
+            password = request.POST['password']
+            auth = authenticate(request, username=username, password=password)
+            if auth:
+                login(request, auth)
+                messages.success(request, f'Bienvenido {auth.first_name}, iniciaste tu sesión.')
+                return redirect('profile')
+            else:
+                messages.error(request, "Credenciales invalidos, intenta nuevamente.")
+                return redirect('index')
 
     return render(request, 'apavelas/index.html')
 
@@ -51,11 +63,13 @@ def LogOutView(request):
 
 @login_required
 def card(request):
+    emailList(request)
     profile = Profile.objects.filter(user = request.user)[0]
     context = {'profile': profile}
     return render(request, 'apavelas/card.html', context)
 
 def qrscan(request, qrscan):
+    emailList(request)
     profile = Profile.objects.filter(id=qrscan)[0]
     if request.method == 'POST':
         if 'login' in request.POST:
@@ -65,6 +79,7 @@ def qrscan(request, qrscan):
 
 @login_required
 def members(request):
+    emailList(request)
     members = Profile.objects.all()
     
     context = {'members' : members}
@@ -72,7 +87,7 @@ def members(request):
     return render(request, 'apavelas/members.html', context)
 
 def benefits(request):
-    
+    emailList(request)
     if request.method == 'POST':
         print(request.POST)
         if 'login' in request.POST:
@@ -91,6 +106,7 @@ def benefits(request):
     return render(request, 'apavelas/benefits.html', context)
 
 def places(request, type_of_service):
+    emailList(request)
     if request.method == 'POST':
         if 'login' in request.POST:
             authentication(request)
@@ -113,6 +129,7 @@ def places(request, type_of_service):
     return render(request, 'apavelas/places.html', context)
 
 def events(request):
+    emailList(request)
     events = Event.objects.all()
     if request.method == 'POST':
         if 'login' in request.POST:
@@ -130,6 +147,7 @@ def events(request):
     return render(request, 'apavelas/events.html', context)
 
 def gallery(request):
+    emailList(request)
     photos = Photo.objects.all()
     if request.method == 'POST':
         if 'login' in request.POST:
@@ -151,6 +169,7 @@ def gallery(request):
 @login_required
 @staff_member_required
 def accounting(request):
+    emailList(request)
     form = TransactionForm()
     print(request.user)
     profile = Profile.objects.filter(user=request.user)[0]

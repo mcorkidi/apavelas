@@ -200,7 +200,8 @@
           <h4>Inscribite a nuestra lista de contactos.</h4>
           <p>Enterate de novedades y eventos. </p>
           <form action="" method="post">
-            <input type="email" name="email"><input type="submit" value="Subscribe">
+            {% csrf_token %} 
+            <input type="email" name="email_list"><input type="submit" value="Subscribe">
           </form>
         </div>
       </div>
