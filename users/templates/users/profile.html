@@ -55,7 +55,7 @@
                                 </div>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="inputGroup-sizing-default">Telefono</span>
-                                    <input type="tel" name="telephone" value="{{ profile.telefone }}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                    <input type="tel" name="telephone" value="{{ profile.telephone }}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                                 </div>
                             </div>
                             
@@ -181,10 +181,12 @@
                     <li class="list-group-item">Status: No Activo</li>
                     {%endif%} 
                     </ul>
+                    {% if profile.active %}
                     <div class="card-body">
                     <a href="{% url 'card' %}" class="card-link" target="blank">Ver Tarjeta</a>
                     <a href="#" class="card-link">Descargar</a>
                     </div>
+                    {% endif %} 
                     <div class="card-footer d-flex justify-content-center">
                         <img src="/pictures/qrcodes/{{ profile.id }}.jpg" style="width:150px;height:150px;" alt="...">
                     </div>

@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from users.models import Profile
 from apavelas.models import Transaction
-from apavelas.views import emailList
+from apavelas.views import emailList, authentication
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -20,7 +20,11 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 
 def register(request):
     emailList(request)
+    
     if request.method == 'POST':
+        if 'login' in request.POST:
+            authentication(request)
+            return redirect('profile')
         if 'register' in request.POST:
             print(request.POST)
             username = request.POST.get('username')

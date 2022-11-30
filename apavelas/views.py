@@ -64,6 +64,7 @@ def LogOutView(request):
 @login_required
 def card(request):
     emailList(request)
+    authentication(request)
     profile = Profile.objects.filter(user = request.user)[0]
     context = {'profile': profile}
     return render(request, 'apavelas/card.html', context)
