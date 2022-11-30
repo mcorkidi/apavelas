@@ -1,4 +1,5 @@
 from django import forms
+from .models import *
 
 class ProfileImageForm(forms.Form):
 	
@@ -7,3 +8,6 @@ class ProfileImageForm(forms.Form):
 class FaceImageForm(forms.Form):
 	
 	foto_tarjeta = forms.ImageField()
+
+
+

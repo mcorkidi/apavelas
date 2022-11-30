@@ -3,6 +3,97 @@
 {% load static %}
 
 <div class="container d-flex justify-content-center">
+    
+    <div id="staticBackdrop" class="modal fade" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content p-3">
+                
+
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>   
+                        <form method="post">
+                            {% csrf_token %}
+                            <h2>Editar Perfil</h2>
+                            <div class="row">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Usuario</span>
+                                    <input type="text" name="username" value="{{ user.username }}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Cambiar Contraseña</span>
+                                    <input type="password" name="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Confirmar Contraseña</span>
+                                    <input type="password" name="password1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="inputGroup-sizing-default">Nombre</span>
+                                        <input type="text" name="first_name" value="{{ user.first_name }}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="inputGroup-sizing-default">Apellido</span>
+                                        <input type="text"name="last_name" value="{{ user.last_name }}"class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
+                                    <input type="email" name="email" value="{{ user.email }}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Telefono</span>
+                                    <input type="tel" name="telephone" value="{{ profile.telefone }}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                </div>
+                            </div>
+                            
+                            <div class="input-group mb-3" >
+                                <select class="form-select" id="inputGroupSelect03" name="talla">
+                                <option selected>Selecciona...</option>
+                                <option value="S">S - SMALL</option>
+                                <option value="M">M -MEDIUM</option>
+                                <option value="L">L - LARGE</option>
+                                <option value="XL">XL - EXTRA LARGE</option>
+                                
+                                </select>
+                                <label class="input-group-text" for="inputGroupSelect03">Talla para licra</label>
+                            </div>
+                            <div class="input-group mb-3" >
+                                <select class="form-select" id="inputGroupSelect02" name="sport">
+                                <option selected>Selecciona...</option>
+                                <option value="kite">KiteSurf</option>
+                                <option value="wing">WingSurf</option>
+                                <option value="kitefoil">KiteFoil</option>
+                                <option value="wing">WingFoil</option>
+                                <option value="sail">Vela</option>
+                                </select>
+                                <label class="input-group-text" for="inputGroupSelect02">Deporte de Preferencia</label>
+                            </div>
+                           
+                            <div class="d-flex justify-content-end">
+                            <button class="btn btn-primary" type="submit" name="edit">Guardar</button>
+                            </div>
+                        </form>
+
+                        
+            </div>
+        </div>
+    </div>
+
+
+
     <div class="row">
         <div class="col-lg-4 col-sm-12">
             <div class="p-2 shadow rounded mb-2 mt-3 text-center">
@@ -34,18 +125,26 @@
                 </div>
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="inputGroup-sizing-default">Telefono</span>
-                    <input disabled type="text" value="{{ profile.telefone }}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    <input disabled type="text" value="{{ profile.telephone }}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                 </div>
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="inputGroup-sizing-default">Deporte</span>
                     <input disabled type="text" value="{{ profile.sport }}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                 </div>
+               
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Talla</span>
+                    <input disabled type="text" name="talla" value="{{ profile.talla }}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                </div>
+                
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="inputGroup-sizing-default">Status</span>
                     <input disabled type="text" value="{% if profile.active %} Activo {% else %} Inactivo {% endif %}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                 </div>
+
                 <div class="d-flex justify-content-end">
-                    <button class="btn btn-secondary">Edit</button>
+                    <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="edit" name="edit">Editar</a>
+                    
                 </div>
 
             

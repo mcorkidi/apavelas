@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate, login, logout
 import qrcode
 from django.conf import settings
 from os.path import exists
-from .forms import ProfileImageForm, FaceImageForm
+from .forms import *
 from PIL import Image, ExifTags
 from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
@@ -29,10 +29,14 @@ def register(request):
             last_name = request.POST.get('last_name')
             telephone = request.POST.get('telephone')
             sport = request.POST.get('sport')
+            talla = request.POST.get('talla')
             if password != password1:
                 messages.error(request, 'Error, revisa que la contraseña sea igual a la confirmacion.')
                 return render(request, 'users/registration.html')
             try:
+                if User.objects.filter(email=email).exists():
+                    messages.error(request, 'Error: Correo ya registrado, intenta nuevamente con otro correo.')
+                    return render(request, 'users/registration.html')
                 newUser = User.objects.create_user(username, email, password)
                 newUser.first_name = first_name
                 newUser.last_name = last_name
@@ -42,7 +46,7 @@ def register(request):
                 return render(request, 'users/registration.html')
 
             newProfile = Profile.objects.create(user=newUser, telephone=telephone, 
-            sport=sport)
+            sport=sport, talla=talla) 
             newProfile.qrcode = f'{settings.BASE_HOST}qrscan/{newProfile.id}' 
             newProfile.save()
             img = qrcode.make(f'{settings.BASE_HOST}qrscan/{newProfile.id}')
@@ -67,7 +71,7 @@ def register(request):
 
 @login_required
 def profile(request):
-
+    
     profile = Profile.objects.get(user = User.objects.get(username=request.user))
     transactions = Transaction.objects.filter(user = User.objects.get(username=request.user))
     if exists(f"{settings.MEDIA_ROOT}/qrcodes/{profile.id}.jpg"):
@@ -127,9 +131,64 @@ def profile(request):
                                               'image/jpeg', thumb_io.tell(), None)
             profile.faceImage = inmemory_uploaded_file
             profile.save()
+        if 'edit' in request.POST:
+            username = request.POST.get('username')
+            email =request.POST.get('email')
+            password = request.POST.get('password')
+            password1 = request.POST.get('password1')
+            first_name = request.POST.get('first_name')
+            last_name = request.POST.get('last_name')
+            telephone = request.POST.get('telephone')
+            sport = request.POST.get('sport')
+            talla = request.POST.get('talla')
+            
+            
+            if password == '' and password1 == '':
+                editUser = request.user
+                editUser.username = username
+                editUser.email = email
+                editUser.first_name = first_name
+                editUser.last_name = last_name
+                editUser.save()
+                editProfile = Profile.objects.get(user=editUser)
+                editProfile.telephone = telephone
+                editProfile.sport = sport
+                editProfile.talla = talla
+                if talla == 'Selecciona...':
+                    editProfile.talla = profile.talla
+                if sport == 'Selecciona...':
+                    editProfile.sport = profile.sport
+                editProfile.save()
+                profile = editProfile
+                messages.success(request, 'Perfil editado exitosamente!')
+            else:
+                if password != password1:
+                    messages.error(request, 'Error, revisa que la contraseña sea igual a la confirmacion.')
+                else:
+                    editUser = request.user
+                    editUser.username = username
+                    editUser.email = email
+                    editUser.first_name = first_name
+                    editUser.last_name = last_name
+                    editUser.password = password
+                    editUser.save()
+                    editProfile = Profile.objects.get(user=editUser)
+                    editProfile.telephone = telephone
+                    editProfile.sport = sport
+                    editProfile.talla = talla
+                    if talla == 'Selecciona...':
+                        editProfile.talla = profile.talla
+                    if sport == 'Selecciona...':
+                        editProfile.sport = profile.sport
+                    editProfile.save()
+                    messages.success(request, 'Perfil editado exitosamente!')
+                    profile = editProfile
+        
+
     else:
         form = ProfileImageForm()
         face_form = FaceImageForm()
+      
 
 
 

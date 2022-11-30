@@ -152,7 +152,8 @@ def gallery(request):
 @staff_member_required
 def accounting(request):
     form = TransactionForm()
-
+    print(request.user)
+    profile = Profile.objects.filter(user=request.user)[0]
     if request.method == 'POST':
         if 'new' in request.POST:
             form = TransactionForm(request.POST)
@@ -175,5 +176,5 @@ def accounting(request):
 
 
     context = {'form': form, 'balance': balance, 'transactions':transactions,
-    'income':income, 'expenses':expenses}
+    'income':income, 'expenses':expenses, 'profile':profile}
     return render(request, "apavelas/accounting.html", context)
