@@ -83,7 +83,7 @@
                 <div class="card-footer">
                     <form method="post">
                         {% csrf_token %}
-                    <button type="submit" class="btn btn-sm" name="delete" value="{{place.id}}">Delete</button>
+                    <button type="submit" onclick="if (confirm('Confirma eliminar sitio.')) return true; else return false;" class="btn btn-sm" name="delete" value="{{place.id}}">Delete</button>
                     </form>
                 </div>
                 {%endif %} 

@@ -68,7 +68,7 @@ body {
                 
                     <form method="post">
                         {% csrf_token %}
-                    <button type="submit" class="btn btn-sm btn-secondary" name="delete" value="{{photo.id}}">Delete</button>
+                    <button type="submit" onclick="if (confirm('Confirma eliminar foto.')) return true; else return false;"class="btn btn-sm btn-secondary" name="delete" value="{{photo.id}}">Delete</button>
                     </form>
                
                 {%endif %} 

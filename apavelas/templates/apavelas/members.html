@@ -14,6 +14,10 @@
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Correo</th>
+                            {% if request.user.is_staff %}
+                            <th>Status</th>
+                            {%endif%}
+                
                         </tr>
                     </thead>
                     <tbody>
@@ -23,6 +27,15 @@
                             <td>{{member.user.first_name}}</td>
                             <td>{{member.user.last_name}}</td>
                             <td>{{member.user.email}}</td>
+                            {% if request.user.is_staff %}
+                            <td>
+                                {% if member.active %}
+                                    ACTIVO<img src="{% static '/apavelas/active.jpg' %}" width="25" height="25" alt="">
+                                {% else %} 
+                                    NO ACTIVO<img src="{% static '/apavelas/inactive.jpg' %}" width="25" height="25" alt="">
+                                {% endif %}
+                            {% endif %} 
+                            </td>
                         </tr>
 
                     

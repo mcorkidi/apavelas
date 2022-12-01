@@ -29,6 +29,9 @@ class Place(models.Model):
     descripcion = models.CharField(max_length=255, blank=True, null=True)
     created_date = models.DateField(auto_now_add=True)
     tipo_de_sitio = models.CharField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return self.nombre
  
 
 class Event(models.Model):
@@ -41,6 +44,9 @@ class Event(models.Model):
     descripcion = models.CharField(max_length=255, blank=True, null=True)
     created_date = models.DateField(auto_now_add=True)
     fecha_de_evento = models.DateField(blank=True, default=datetime.now)
+
+    def __str__(self):
+        return self.nombre
 
 class Photo(models.Model):
     uploader = models.CharField(max_length=255, blank=True, null=True)

@@ -58,7 +58,7 @@
                 <div class="card-footer">
                     <form method="post">
                         {% csrf_token %}
-                    <button type="submit" class="btn btn-sm" name="delete" value="{{event.id}}">Delete</button>
+                    <button type="submit" onclick="if (confirm('Confirma eliminar evento.')) return true; else return false;"  class="btn btn-sm" name="delete" value="{{event.id}}">Delete</button>
                     </form>
                 </div>
                 {%endif %} 
