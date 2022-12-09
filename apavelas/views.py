@@ -138,7 +138,10 @@ def events(request):
         if 'new' in request.POST:
             form=EventsForm(request.POST, request.FILES)
             if form.is_valid:
-                form.save()
+                try:
+                    form.save()
+                except Exception as e:
+                    messages.error(request, f'Error creando evento: {e}')
         if 'delete' in request.POST:
             print('delete' , request.POST)
             toBeDeleted = Event.objects.get(id=request.POST.get('delete'))
