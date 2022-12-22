@@ -8,3 +8,4 @@ db.sqlite3
 secrets.py
 *.DS_Store
 pictures
+migrations
