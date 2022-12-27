@@ -14,6 +14,9 @@ from .forms import *
 from PIL import Image, ExifTags
 from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
 
 # Create your views here.
@@ -59,7 +62,9 @@ def register(request):
 
             
             img.save(f'{settings.MEDIA_ROOT}/qrcodes/{newProfile.id}.jpg')
-
+            htmlWelcome = render_to_string('email/welcome.html', {'first_name': first_name})
+            plainWelcome = strip_tags(htmlWelcome)
+            send_mail('Bienvenido a APK', plainWelcome, 'noreply@apavelas.com', [email], html_message=htmlWelcome)
 
             messages.success(request, 'Te registraste exitosamente, procede a iniciar la sesión.')
             auth = authenticate(request, username=username, password=password)
