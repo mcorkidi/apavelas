@@ -8,6 +8,7 @@ admin.site.index_title = "Apavelas Administrator"
 class TransactionAdmin(admin.ModelAdmin):
     list_display = ['fecha', 'descripcion', 'amount', 'account', 'user']
     list_editable = ['user']
+    search_fields = ['descripcion']
 # Register your models here.
 
 admin.site.register(Benefit)

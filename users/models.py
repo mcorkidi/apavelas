@@ -8,8 +8,6 @@ from datetime import datetime
 class Profile(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    first_name = user.first_name
-    last_name = user.last_name
     image = models.ImageField(default='profilepic.jpg', upload_to='profile_pictures')
     faceImage = models.ImageField(default='facepic.jpg', upload_to='face_pictures')
     telephone = models.CharField(max_length=100)
@@ -56,7 +54,8 @@ class Profile(models.Model):
     )
 
     
-
+    def full_name(self):
+        return f'{self.user.first_name} {self.user.last_name}' 
 
     def __str__(self):
         return self.user.username
