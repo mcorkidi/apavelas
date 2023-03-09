@@ -1,0 +1,28 @@
+{% extends 'apavelas/base.html' %}
+{% block body %}
+{% load static %}
+<div class="container">
+    <div class="col-md-6 col-sm-11"><div class="p-2 shadow rounded mb-2 mt-2"><h1>Contabilidad</h1></div></div>
+    
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+        <a class="nav-link " aria-current="page" href="{% url 'accounting' %}">Caja</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link active" href="{% url 'statement' %}">Resultados</a>
+        </li>
+        
+        
+    </ul>
+    <h3>Ingresos</h3>
+    {% for account, value in income_accounts.items %} 
+     {{account}} - {{value}}<br>
+     {% endfor %}
+    <h3>Gastos</h3>
+     {% for account, value in expense_accounts.items %} 
+     {{account}} - {{value}}<br>
+     {% endfor %}
+
+</div>
+
+  {% endblock %} 

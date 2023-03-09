@@ -63,7 +63,9 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNavDropdown1">
             <ul class="navbar-nav ms-auto">
-             
+              <li class="nav-item">
+                <a class="nav-link fw-bold"  href="{% url 'market' %}">COMPRA Y VENDE</a>
+            </li> 
                 <li class="nav-item dropdown">
                     
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -73,6 +75,7 @@
                       <li><a class="dropdown-item" href="{% url 'index' %}#about">Acerca de APAVELAS</a></li>
                       <li><a class="dropdown-item" href="{% url 'index' %}#about">Nuestra Vision</a></li>
                       <li><a class="dropdown-item" href="{% url 'index' %}#team">Junta Directiva</a></li>
+                      <li><a class="dropdown-item" href="{% url 'index' %}#gallery">Galeria</a></li>
                       
                     </ul>
                 </li>
@@ -84,6 +87,7 @@
                       <li><a class="dropdown-item" href="#">Estatutos</a></li>
                       <li><a class="dropdown-item" href="#">Estados Financieros</a></li>
                       <li><a class="dropdown-item" href="#">Reglamentos</a></li>
+                      
                       {% if request.user.is_staff %}
                       <li><a class="dropdown-item" href="{% url 'accounting' %}">Contabilidad</a></li>
                       {% endif %} 
@@ -106,12 +110,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'benefits' %}">BENEFICIOS</a>
                 </li>
+                
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'events' %}">EVENTOS</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'gallery'%}">GALERIA</a>
-                </li>                                                 
+                                                                
                 
                 
                 {% if user.is_authenticated %}

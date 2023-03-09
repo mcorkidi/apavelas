@@ -9,7 +9,9 @@ class TransactionAdmin(admin.ModelAdmin):
     list_display = ['fecha', 'descripcion', 'amount', 'account', 'user']
     list_editable = ['user']
     search_fields = ['descripcion']
-# Register your models here.
+
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ['name', 'parent_category']
 
 admin.site.register(Benefit)
 admin.site.register(Event)
@@ -20,4 +22,7 @@ admin.site.register(Bank)
 admin.site.register(Account)
 admin.site.register(Transaction, TransactionAdmin)
 admin.site.register(EmailList)
+admin.site.register(Product)
+admin.site.register(Category, CategoryAdmin)
+
 

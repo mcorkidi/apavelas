@@ -1,0 +1,119 @@
+{% extends 'apavelas/base.html' %}
+{% block body %}
+{% load static %}
+<div class="container d-flex justify-content-center ">
+    
+        <div class="shadow rounded p-2">
+            <form method="post" enctype='multipart/form-data'>
+                {% csrf_token%} 
+                <h4>Detalles</h4>
+                <div class="row">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Titulo</span>
+                        <input type="text" name="titulo" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Marca</span>
+                        <input type="text" name="marca" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </div>
+                    </div>
+                    <div class="col-lg-4">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Modelo</span>
+                        <input type="text" name="modelo" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Numero de Serie</span>
+                            <input type="text" name="modelo" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="input-group mb-3" >
+                            <select class="form-select" id="inputGroupSelect03" name="condicion">
+                            <option selected>Selecciona...</option>
+                            <option value="U">USADO</option>
+                            <option value="N">NUEVO</option>
+                            
+                            </select>
+                            <label class="input-group-text" for="inputGroupSelect03">Condicion</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Precio $</span>
+                            <input type="number" min="1" step="any"  name="precio" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Descripcion</span>
+                        <textarea type="textarea" rows="3" name="descripcion" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"></textarea>
+                    </div>
+                </div>
+
+        </div>
+
+            
+</div>
+<div class="container d-flex justify-content-center mt-3">
+    <div class="shadow rounded p-2 ">
+        <h4>Imagenes</h4>
+        <div class="row">
+            <div class="col-6">Maximo 10 Images: <input type="file" name="images" multiple="true"></div>
+        </div>
+    </div>
+</div>
+
+    <div class="container d-flex justify-content-center mt-3">
+        <div class="shadow rounded p-2 ">
+            <h4>Contacto</h4>
+            <div class="row">
+            
+                <div class="col-lg-4">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Nombre</span>
+                        <input type="text" name="nombre" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Telefono</span>
+                        <input type="tel" name="telefono" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Correo</span>
+                        <input type="email" name="correo" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container d-flex flex-row-reverse mt-3">
+        <div class="row p-2">
+           
+           
+            <button type="submit" name="register" class="btn btn-primary">Listar</button>
+     
+            
+        </div>
+    </div>
+</form>
+</div>
+
+
+            
+</div>
+
+
+{% endblock %} 

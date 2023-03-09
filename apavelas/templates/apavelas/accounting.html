@@ -2,9 +2,20 @@
 {% block body %}
 {% load static %}
 
-<div class="container">
+
+
+<ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'accounting' %}">Caja</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'statement' %}">Resultados</a>
+        </li>
+        
+        
+      </ul>
     <div class="row mx-auto justify-content-center">
-        <div class="col-md-6 col-sm-11"><div class="p-2 shadow rounded mb-2 mt-2"><h1>Contabilidad</h1></div></div>
+        
         {% if profile.type_of_member ==  "TESORERO" %}
         <div class="col-md-1 col-sm-1"><br><a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="new" name="new">Nuevo </a></div>
        

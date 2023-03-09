@@ -34,7 +34,10 @@ urlpatterns = [
     path('events/', views.events, name='events'),
     path('places/<type_of_service>', views.places, name='places'),
     path('gallery/', views.gallery, name='gallery'),
-    path('accounting/', views.accounting, name='accounting')
+    path('accounting/', views.accounting, name='accounting'),
+    path('statement/', views.statement, name='statement'),
+    path('market/', views.market, name='market'),
+    path('market/new_listing', views.newListing, name='new_listing')
 
 ]
 

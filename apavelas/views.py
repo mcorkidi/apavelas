@@ -9,7 +9,7 @@ from users.models import Profile
 from .models import Benefit, Event, Place, Photo
 from .forms import *
 from django.core.files.images import ImageFile
-# Create your views here.
+
 
 def emailList(request):
     if request.method == 'POST':
@@ -41,6 +41,7 @@ def authentication(request):
 
 def index(request):
     emailList(request)
+    
     if request.method == 'POST':
         if 'login' in request.POST:
             username = request.POST['username']
@@ -131,7 +132,7 @@ def places(request, type_of_service):
 
 def events(request):
     emailList(request)
-    events = Event.objects.all()
+    events = Event.objects.all().order_by('-created_date')
     if request.method == 'POST':
         if 'login' in request.POST:
             authentication(request)
@@ -195,9 +196,48 @@ def accounting(request):
         if i.type_of_transaction == 'GASTO':
             balance -= i.amount
             expenses.append(i)
+    balance = "{:,.2f}".format(balance)
     
 
 
     context = {'form': form, 'balance': balance, 'transactions':transactions,
     'income':income, 'expenses':expenses, 'profile':profile}
     return render(request, "apavelas/accounting.html", context)
+
+@login_required
+@staff_member_required
+def statement(request):
+    transactions = Transaction.objects.all()
+    income_accounts = {}
+    expense_accounts = {}
+    for i in transactions:
+        if i.type_of_transaction == "INGRESO":
+            if i.account.name not in income_accounts:
+                income_accounts[i.account.name] = i.amount
+            else:
+                print(income_accounts[i.account.name])
+                income_accounts[i.account.name] += i.amount
+        elif i.type_of_transaction == "GASTO":
+            if i.account.name not in expense_accounts:
+                expense_accounts[i.account.name] = i.amount
+            else:
+                expense_accounts[i.account.name] += i.amount
+    
+
+    context = {'income_accounts': income_accounts, 'expense_accounts':expense_accounts}
+    return render(request, "apavelas/statement.html", context)
+def market(request):
+    categories = Category.objects.all()
+    print(categories[1], '\n')
+    print(categories.filter(parent_category=categories[1]))
+    context = {'categories': categories}
+    return render(request,"apavelas/market.html", context)
+
+@login_required
+def newListing(request):
+    categories = Category.objects.all()
+    form = NewListingForm()
+
+
+    context = {'categories': categories, 'form': form}
+    return render(request,"apavelas/new_listing.html", context)

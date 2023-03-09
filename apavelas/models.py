@@ -1,5 +1,5 @@
 from django.db import models
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.contrib.auth.models import User
 # Create your models here.
 
@@ -105,5 +105,52 @@ class EmailList(models.Model):
     def __str__(self):
         return self.email
 
+def get_expiration():
+    return datetime.today() + timedelta(days=30)
+
+class Category(models.Model):
+    name = models.CharField(max_length=50)
+    parent_category = models.ForeignKey(
+        'self', on_delete=models.CASCADE, blank=True,null=True
+    )
+    def __str__(self):
+        return self.name
+
+class Product(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    titulo = models.CharField(max_length=80)
+    TYPE_CHOICES = [
+        ("NUEVO", 'NUEVO'),
+        ("USADO", 'USADO'),
+        
+    ]
+    condicion = models.CharField(
+        max_length=5,
+        choices=TYPE_CHOICES,
+        default="USADO",
+    )
+    marca = models.CharField(max_length=40, blank=True)
+    modelo = models.CharField(max_length=40, blank=True)
+    numero_serie = models.CharField(max_length=40, blank=True)
+    descripcion = models.TextField(blank=True, null=True)
+    categoria = models.ForeignKey(Category, on_delete=models.SET_NULL, blank=True, null=True)
+    precio = models.FloatField()
+    entrega = models.CharField(max_length=255, blank=True)
+    costo_envio = models.FloatField(blank=True, null=True)
+    nombre = models.CharField(max_length=40)
+    telefono = models.IntegerField()
+    correo = models.EmailField(blank=True, null=True)
+    fecha_creada = models.DateField(auto_now_add=True)
+    fecha_expiracion = models.DateField(blank=True, default=get_expiration)
+    active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.titulo
 
 
+class ImageProduct(models.Model):
+    name = models.CharField(max_length=255)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    image = models.ImageField(default='photos/photo.jpg', upload_to='products')
+    default = models.BooleanField(default=False)
+    order = models.SmallIntegerField(default=1)

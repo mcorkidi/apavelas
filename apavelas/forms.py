@@ -39,6 +39,11 @@ class TransactionForm(forms.ModelForm):
         model=Transaction
         fields='__all__'
 
+class NewListingForm(forms.ModelForm):
+    class Meta:
+        model=Product
+        fields=['titulo', 'condicion', 'marca', 'modelo', 'numero_serie', 'descripcion', 'precio', 'entrega', 'costo_envio',
+                'nombre', 'telefono', 'correo']
 
        
 
