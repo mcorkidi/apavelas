@@ -1,0 +1,94 @@
+{% extends 'apavelas/base.html' %}
+{% block body %}
+{% load static %}
+
+<link href="{% static 'apavelas/assets/css/image_gallery.css' %}" rel="stylesheet">
+<div class="container-fluid">
+    <div class="row p-2">
+        <div class="col-2"></div>
+        <div class="col-8 justify-content-center">
+            <form method="POST" class="form-inline" >
+                {% csrf_token %} 
+                <div class="form-group">
+                    <div class="input-group">
+                    <input class="form-control " name="search" type="search" placeholder="El que busca encuentra." aria-label="Search">
+                    <button class="btn btn-outline-success " type="submit">Buscar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row-fluid section-bg mb-2 ">
+        <div class="d-flex justify-content-between">
+            {% for category in categories %} 
+            {% if category.parent_category == NONE %} 
+            <button class="btn"><a href="{% url 'search_results' keyword=category.name %}">{{category.name}} </a></button>
+            {% endif %}
+            {% endfor %} 
+            {% if user.is_authenticated %}
+            <button class="btn "><a href="{% url 'category_pick' %}">Listar Nuevo</a></button>
+            {% else %} 
+            <button class="btn "><a href="">Listar Nuevo</a></button>
+            {% endif %}
+            </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="shadow rounded p-2">
+            <h1>Mis Anuncios</h1>
+        </div>
+    </div>
+    <div class="row p-2">
+        <div class="col-md-2">
+            <h3>Filtros</h3>
+        </div>
+        <div class="col-md-10">
+            <div class="list-group">
+                {% for product in products %} 
+                
+                
+                    <div class="list-group-item list-group-item-action">
+                        <div class="row">
+                        <div class="col-4">
+                        {% for image in product.imageList|slice:":1" %}
+                        <img src="{{image}}" alt="no image" srcset="" width="300">
+                        
+                        {% endfor %}
+                        </div>
+                        <div class="col-6">
+                        <h4>{{product.titulo}}</h4> 
+                        {{product.get_condicion_display}}
+                        <h5>Precio: ${{product.precio}}</h5>
+                        <p class="text-muted">+ ${{product.costo_envio}} envio</p>
+                        <h6>Categoria: {{product.categoria.name}}</h6>
+                        {% if product.active %}
+                        <h6>Estado: Activo</h6>
+                        {% else %} 
+                        <h6>Estado: Desactivado</h6>
+                        {% endif %}
+                        </div>
+                        <div class="col-2">
+                        <a class="btn btn-primary mb-2" role="button" href="{% url 'listing' product_id=product.id %}">Ver Anuncio</a><br>
+                        <a class="btn btn-info mb-2" role="button" href="{% url 'edit_listing' product_id=product.id %}">Editar</a>
+                        <form method="post">
+                            {% csrf_token %} 
+                            {% if product.active %}
+                            <button type="submit" class="btn btn-secondary mb-2" name="deactivate" value="{{product.id}}">Desactivar</button>
+                            {% else %} 
+                            <button type="submit" class="btn btn-secondary mb-2" name="activate" value="{{product.id}}">Activar</button>
+                            {% endif %}
+                            <button type="submit" class="btn btn-danger mb-2" onclick="if (confirm('Confirm Delete')) return true; else return false;"  name="delete" value="{{product.id}}">Eliminar</button>
+                        </form>
+                        </div>
+                  
+                    </div>
+                </div>
+                {%endfor%} 
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %} 

@@ -25,10 +25,10 @@ class EventsForm(forms.ModelForm):
         model=Event
         fields = '__all__'
 
-class GalleryForm(forms.ModelForm):
-    class Meta:
-        model=Photo
-        fields='__all__'
+# class GalleryForm(forms.ModelForm):
+#     class Meta:
+#         model=Photo
+#         fields='__all__'
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

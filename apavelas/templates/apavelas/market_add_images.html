@@ -1,0 +1,25 @@
+{% extends 'apavelas/base.html' %}
+{% block body %}
+{% load static %}
+
+<div class="container d-flex justify-content-center mt-3">
+    <div class="row">
+        <div class="shadow rounded p-2 ">
+            <form  method="post" enctype="multipart/form-data">
+                {% csrf_token%} 
+            <h1>{{product.titulo}}</h1>
+            <h4>Sube las Imagenes</h4>
+            
+            <div class="col-12">Maximo 10 Images: <input type="file" name="images" multiple="true" accept="image/*"></div>
+            <div class="container d-flex flex-row-reverse mt-3">
+            <button type="submit" name="new" class="btn btn-primary">Publicar</button>
+        </div>
+            </form>
+        </div>
+    </div>
+   
+</div>
+
+
+
+{% endblock %} 

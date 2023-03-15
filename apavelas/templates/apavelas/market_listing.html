@@ -1,0 +1,133 @@
+{% extends 'apavelas/base.html' %}
+{% block body %}
+{% load static %}
+<link href="{% static 'apavelas/assets/css/image_gallery.css' %}" rel="stylesheet">
+<div class="container-fluid">
+    <div class="row p-2">
+        <div class="col-2"></div>
+        <div class="col-8 justify-content-center">
+            <form class="form-inline" method="post">
+              {% csrf_token %} 
+                <div class="form-group">
+                    <div class="input-group">
+                    <input class="form-control " name="search" type="search" placeholder="El que busca encuentra." aria-label="Search">
+                    <button class="btn btn-outline-success " type="submit">Buscar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row-fluid section-bg mb-2 ">
+        <div class="d-flex justify-content-between">
+            {% for category in categories %} 
+            {% if category.parent_category == NONE %} 
+            <button class="btn"><a href="{% url 'search_results' keyword=category.name %}">{{category.name}} </a></button>
+            {% endif %}
+            {% endfor %} 
+            {% if user.is_authenticated %}
+            <button class="btn "><a href="{% url 'category_pick' %}">Listar Nuevo</a></button>
+            {% else %} 
+            <button class="btn "><a href="">Listar Nuevo</a></button>
+            {% endif %}
+            </div>
+    </div>
+</div>
+
+<div class="container shadow rounded p-2">
+    <div class="row">
+        <div class="col-md-4">
+            
+
+                <div class="container">
+                    {% for image in images %} 
+                  <div class="mySlides">
+                    <div class="numbertext">{% cycle '1' '2' '3' '4' '5' '6' '7' '8' '9' as pic%}</div>
+                    <img src="{{image}}" style="width:100%">
+                  </div>
+                  {% endfor %} 
+                  {% resetcycle pic %}
+                    
+                  <a class="prev" onclick="plusSlides(-1)">❮</a>
+                  <a class="next" onclick="plusSlides(1)">❯</a>
+                
+                  <div class="caption-container">
+                    <p id="caption"></p>
+                  </div>
+                
+                  <div class="row">
+                    {% for image in images %} 
+                    <div class="column">
+                      <img class="demo cursor" src={{image}} style="width:100%" onclick="currentSlide({% cycle '1' '2' '3' '4' '5' '6' '7' '8' '9' as pic1%})" alt="">
+                    </div>
+                    {% endfor %} 
+                    {% resetcycle pic1 %}
+                  </div>
+                </div>
+                
+                <script>
+                let slideIndex = 1;
+                showSlides(slideIndex);
+                
+                function plusSlides(n) {
+                  showSlides(slideIndex += n);
+                }
+                
+                function currentSlide(n) {
+                  showSlides(slideIndex = n);
+                }
+                
+                function showSlides(n) {
+                  let i;
+                  let slides = document.getElementsByClassName("mySlides");
+                  let dots = document.getElementsByClassName("demo");
+                //   let captionText = document.getElementById("caption");
+                  if (n > slides.length) {slideIndex = 1}
+                  if (n < 1) {slideIndex = slides.length}
+                  for (i = 0; i < slides.length; i++) {
+                    slides[i].style.display = "none";
+                  }
+                  for (i = 0; i < dots.length; i++) {
+                    dots[i].className = dots[i].className.replace(" active", "");
+                  }
+                  slides[slideIndex-1].style.display = "block";
+                  dots[slideIndex-1].className += " active";
+                //   captionText.innerHTML = dots[slideIndex-1].alt;
+                }
+                </script>
+
+
+
+
+        </div>
+        <div class="col-md-4 shadow rounded p-2">
+            <h1>{{product.titulo}} </h1><hr>
+            <h6>Condicion: {{ product.get_condicion_display }}</h6>
+            <h2>Marca: {{product.marca}}</h2>
+            <h3>Modelo: {{product.modelo}}</h3>
+            <h4>Año: {{product.year}}</h4>
+            <h2>Precio: ${{product.precio}}</h2>
+            <hr>
+            <p style="background-color:rgb(219, 222, 222);">{{product.descripcion}}</p><br>
+            <h6>Numero de Serie: {{product.numero_serie}}</h6>
+            <h6>Categoria: {{product.categoria.name}}</h6>
+
+
+        </div>
+  
+        <div class="col-md-4 p-2">
+            <h2>Contacto</h2><hr>
+            <h5>{{product.nombre}}</h5><br>
+            <h5>{{product.telefono}}</h5><br>
+            <h5>{{product.correo}}</h5>
+            <hr>
+            <h2>Envio</h2>
+            <p>{{product.entrega}}</p><br>
+            <h5>Costo: ${{product.costo_envio}}</h5>
+
+        </div>
+        
+    </div>
+</div>
+
+ 
+{% endblock %} 

@@ -1512,3 +1512,9 @@ section {
     padding: 2px 0;
   }
 }
+
+.box1 {
+  background-color: #000;
+  color: #fff;
+  opacity: .5;
+}

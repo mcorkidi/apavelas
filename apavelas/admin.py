@@ -16,7 +16,7 @@ class CategoryAdmin(admin.ModelAdmin):
 admin.site.register(Benefit)
 admin.site.register(Event)
 admin.site.register(Place)
-admin.site.register(Photo)
+# admin.site.register(Photo)
 
 admin.site.register(Bank)
 admin.site.register(Account)

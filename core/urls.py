@@ -1,18 +1,4 @@
-"""core URL Configuration
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path, include
 from apavelas import views
@@ -33,11 +19,17 @@ urlpatterns = [
     path('benefits/', views.benefits, name='benefits'),
     path('events/', views.events, name='events'),
     path('places/<type_of_service>', views.places, name='places'),
-    path('gallery/', views.gallery, name='gallery'),
+    # path('gallery/', views.gallery, name='gallery'),
     path('accounting/', views.accounting, name='accounting'),
     path('statement/', views.statement, name='statement'),
     path('market/', views.market, name='market'),
-    path('market/new_listing', views.newListing, name='new_listing')
+    path('market/new_listing/<category>', views.newListing, name='new_listing'),
+    path('category_pick/', views.categoryPick, name='category_pick'),
+    path('add_images/<product>', views.addImages, name='add_images'),
+    path('market/listing/<product_id>', views.listing, name='listing'),
+    path('market/search/<keyword>', views.searchResults, name='search_results'),
+    path('market/my_products/', views.myProducts, name='my_products'),
+    path('market/edit_listing/<product_id>', views.editListing, name='edit_listing')
 
 ]
 
