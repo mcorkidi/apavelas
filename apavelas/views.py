@@ -16,6 +16,7 @@ import shutil
 from PIL import Image
 
 
+
 def emailList(request):
     if request.method == 'POST':
         if 'email_list' in request.POST:
@@ -339,7 +340,9 @@ def addImages(request, product):
                 for chunk in f.chunks():
                     destination.write(chunk)
     if request.method == 'POST':
-        if request.FILES.getlist('images') != '':
+        
+        if request.FILES.getlist('images') != []:
+            print("after check", request.FILES.getlist('images'))
             folder = os.path.join(settings.MEDIA_ROOT, f"products/{request.user.username}")
             images = request.FILES.getlist('images')
             images_linkchain = ""
@@ -405,6 +408,9 @@ def addImages(request, product):
             except Exception as e:
                 print(f"Error in with FTP: {e}")   
                 messages.error(request, f"Error subiendo tus imagenes. Intenta nuevamente o contacta al admnistrador. \n {e}")     
+        else:
+            messages.error(request, f"Estas publicando sin imagenes. Publicaciones con imagen tienen mas chance de que sean compradas.")
+            return redirect('listing', product_id=product.id)
     context = {'product': product}
     return render(request, 'apavelas/market_add_images.html', context)
 
@@ -466,6 +472,7 @@ def myProducts(request):
 
 @login_required
 def editListing(request, product_id):
+    
     emailList(request)
     def checkForInt(x):
         print(x)
@@ -487,9 +494,79 @@ def editListing(request, product_id):
     print(imageList)
     categories = Category.objects.all()
     if request.method == 'POST':
+        print(request.POST)
         if 'search' in request.POST:
             return redirect('search_results', keyword=request.POST.get('search'))
         elif 'update' in request.POST:
+            def handle_uploaded_file(f, filename):
+                folder = os.path.join(settings.MEDIA_ROOT, f"products/{request.user.username}")
+                if os.path.isdir(folder):
+                    pass
+                else: 
+                    print(folder)
+                    os.makedirs(folder)
+                with open(os.path.join(folder, f"{filename}"), 'wb+') as destination:
+                        for chunk in f.chunks():
+                            destination.write(chunk)
+            if request.FILES.getlist('new_images') != []:
+                
+                folder = os.path.join(settings.MEDIA_ROOT, f"products/{request.user.username}")
+                new_images = request.FILES.getlist('new_images')
+                images_linkchain = product.images
+                for i, new_image in enumerate(new_images):
+                    filename = str(i) +  os.path.splitext(new_image.name)[1]
+                    handle_uploaded_file(new_image, filename)
+                    if images_linkchain == "":
+                        images_linkchain = settings.FTP_BASE + f'apavelas/{product.id}/{filename}' 
+                    else: 
+                        images_linkchain += f";{settings.FTP_BASE}apavelas/{product.id}/{filename}"
+                    product.images = images_linkchain
+                    product.save()
+                    try:
+                        with FTP(
+                            settings.FTP_DOMAIN,
+                            settings.FTP_USER,
+                            settings.FTP_PASSWORD
+                            ) as ftp:
+                            print('uploading image')
+                            try:
+                                ftp.cwd(f'/apavelas/{product.id}')
+                            except:
+                                print(f"Make FTP Dir apavelas/{product.id}")
+                                ftp.mkd(f'apavelas/{product.id}')
+                                print("after make dir")
+                                ftp.cwd(f'apavelas/{product.id}')
+                            # onFTP = ftp.nlst()
+                            # print(onFTP)
+                            for i in os.listdir(folder):
+                                print('starting ftp')
+                                file_size = os.path.getsize(f"{folder}/{i}")
+                                if file_size > 500000:
+                                    # Open the image file
+                                    image = Image.open(f"{folder}/{i}")
+                                    # Set the maximum size you want the image to be
+                                    max_size = (1000,1000)
+                                    # # Resize the image, keeping its aspect ratio
+                                    image.thumbnail(max_size, Image.ANTIALIAS)
+                                    # Save the optimized image
+                                    image.save(f"{folder}/{i}", optimize=True, quality=85)
+                                if i == "__MACOSX":
+                                    pass
+                                else:
+                                    try:
+                                        with open(os.path.join(folder, i), 'rb') as file:
+                                            ftp.storbinary('STOR ' + i, file,102400)     # send the file
+                                            print('Uploaded... ' + i, ftp.lastresp)
+                                            file.close()
+                                    except Exception as e:
+                                        print("error", e) 
+                                        messages.error(request, f"Error subiendo tus imagenes. Intenta nuevamente o contacta al admnistrador. \n {e}")  
+                                    
+                        shutil.rmtree(folder) 
+                    except Exception as e:
+                        print(f"Error in with FTP: {e}")   
+                        messages.error(request, f"Error subiendo tus imagenes. Intenta nuevamente o contacta al admnistrador. \n {e}")  
+
             print('Category>>>>>>>>', request.POST)
             
             product.titulo=request.POST.get('titulo')
@@ -513,6 +590,9 @@ def editListing(request, product_id):
             imagePath =  request.POST.get('delete_image')
             imageDelete = imagePath.split('/')[-1]
             print(imageDelete)
+            imageList.remove(imagePath)
+            product.images = ';'.join(imageList)
+            product.save()
             with FTP(
                 settings.FTP_DOMAIN,
                 settings.FTP_USER,
@@ -523,86 +603,15 @@ def editListing(request, product_id):
                     ftp.delete(imageDelete)
                     ftp.close()
                     print("-----Deleting image-------")
-                    imageList.remove(imagePath)
-                    product.images = ';'.join(imageList)
-                    product.save()
+                    
+                    
                 except Exception as e:
                     print(f"FTP Directory not found, error: {e}")
                     messages.error(request, "Error eliminando imagen.")
                     context = {'product': product, 'images':images, 'categories': categories}
                     return render(request, 'apavelas/market_edit_listing.html', context)
-        elif 'new_images' in request.POST:
-            def handle_uploaded_file(f, filename):
-                folder = os.path.join(settings.MEDIA_ROOT, f"products/{request.user.username}")
-                if os.path.isdir(folder):
-                    pass
-                else: 
-                    print(folder)
-                    os.makedirs(folder)
-                with open(os.path.join(folder, f"{filename}"), 'wb+') as destination:
-                        for chunk in f.chunks():
-                            destination.write(chunk)
-            if request.FILES.getlist('new_images') != '':
-                folder = os.path.join(settings.MEDIA_ROOT, f"products/{request.user.username}")
-                new_images = request.FILES.getlist('images')
-                images_linkchain = product.images
-                for i, new_image in enumerate(new_images):
-                    filename = str(i) +  os.path.splitext(new_image.name)[1]
-                    handle_uploaded_file(new_image, filename)
-                    if images_linkchain == "":
-                        images_linkchain = settings.FTP_BASE + f'apavelas/{product.id}/{filename}' 
-                    else: 
-                        images_linkchain += f";{settings.FTP_BASE}apavelas/{product.id}/{filename}"
-                    product.images = images_linkchain
-                    product.save()
-                    try:
-                        with FTP(
-                            settings.FTP_DOMAIN,
-                            settings.FTP_USER,
-                            settings.FTP_PASSWORD
-                            ) as ftp:
-                            
-                            try:
-                                ftp.cwd(f'/apavelas/{product.id}')
-                            except:
-                                print(f"Make FTP Dir apavelas/{product.id}")
-                                ftp.mkd(f'apavelas/{product.id}')
-                                print("after make dir")
-                                ftp.cwd(f'apavelas/{product.id}')
-                            # onFTP = ftp.nlst()
-                            # print(onFTP)
-                            for i in os.listdir(folder):
-                                print('starting ftp')
-                                file_size = os.path.getsize(f"{folder}/{i}")
-                                if file_size > 500000:
-                                    # Open the image file
-                                    image = Image.open(f"{folder}/{i}")
-
-                                    # Set the maximum size you want the image to be
-                                    
-                                    max_size = (1000,1000)
-                                    # # Resize the image, keeping its aspect ratio
-                                    image.thumbnail(max_size, Image.ANTIALIAS)
-
-                                    # Save the optimized image
-                                    image.save(f"{folder}/{i}", optimize=True, quality=85)
-                                if i == "__MACOSX":
-                                    pass
-                                else:
-                                    try:
-                                        with open(os.path.join(folder, i), 'rb') as file:
-                                            ftp.storbinary('STOR ' + i, file,102400)     # send the file
-                                            print('Uploaded... ' + i, ftp.lastresp)
-                                            file.close()
-                                    except Exception as e:
-                                        print("error", e) 
-                                        messages.error(request, f"Error subiendo tus imagenes. Intenta nuevamente o contacta al admnistrador. \n {e}")  
-                                    
-                        shutil.rmtree(folder) 
-                    except Exception as e:
-                        print(f"Error in with FTP: {e}")   
-                        messages.error(request, f"Error subiendo tus imagenes. Intenta nuevamente o contacta al admnistrador. \n {e}")  
-
+        
+            
     context = {'product': product, 'images':images, 'categories': categories}
     
     return render(request, 'apavelas/market_edit_listing.html', context)
