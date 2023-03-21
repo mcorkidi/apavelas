@@ -1,6 +1,7 @@
 {% extends 'apavelas/base.html' %}
 {% block body %}
 {% load static %}
+
 <div class="container ">
     
     <div class="row-fluid mb-2 mt-2">
@@ -46,7 +47,7 @@
                 <div class="col-lg-3">
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-default">Numero de Serie</span>
-                        <input type="text" name="modelo" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        <input type="text" name="numero_serie" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                     </div>
                 </div>
             </div>
@@ -87,16 +88,24 @@
             <h4>Contacto</h4>
             <div class="row">
             
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-default">Nombre</span>
                         <input required type="text" name="nombre" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-2">
                     <div class="input-group mb-3">
-                        <span class="input-group-text" id="inputGroup-sizing-default">Telefono</span>
-                        <input required type="tel" name="telefono" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">+</span>
+                        </div>
+                        <input type="text" class="form-control" name="pais" placeholder="Codigo Pais" aria-label="Codigo Pais">
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="input-group mb-3">
+                        
+                        <input required type="tel" name="telefono" class="form-control" placeholder="Telefono" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -138,6 +147,7 @@
 
             
 </div>
+
 
 
 {% endblock %} 

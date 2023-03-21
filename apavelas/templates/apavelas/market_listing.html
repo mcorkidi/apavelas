@@ -1,6 +1,214 @@
-{% extends 'apavelas/base.html' %}
-{% block body %}
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Asociacion Panameña de Velas - APAVELAS</title>
+    <!-- GOOGLE's JQUERY -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+    <!-- BOOTSTRAP  -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'apavelas/assets/vendor/aos/aos.css' %}" rel="stylesheet">
+    <link href="{% static 'apavelas/assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static 'apavelas/assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+    <link href="{% static 'apavelas/assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'apavelas/assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <!-- Template Main CSS File -->
+    <link href="{% static 'apavelas/assets/css/style.css' %}" rel="stylesheet">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-L619G36473"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-L619G36473');
+    </script>
+    <meta property="og:url"           content="https://www.apavelas.com//market/listing/{{product.id}}" />
+    <meta property="og:type"          content="website" />
+    <meta property="og:title"         content=" {{product.titulo}}" />
+    <meta property="og:description"   content="{{product.descripcion}} ${{product.precio}}" />
+    {% for image in product.imageList|slice:":1" %}
+    <meta property="og:image"         content="{{image}}" />
+    {% endfor %}
+  
+</head>
+<body>
+  <!-- ======= Top Bar ======= -->
+  <section id="topbar" class="d-flex align-items-center">
+    <div class="container d-flex justify-content-center justify-content-md-between">
+      <div class="contact-info d-flex align-items-center">
+        <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:info@apavelas.com">info@apavelas.com</a></i>
+        <i class="bi bi-phone d-flex align-items-center ms-4"><span>+1-507-6948-9248</span></i>
+      </div>
+      <div class="social-links d-none d-md-flex align-items-center">
+        <!-- <a href="#" class="twitter"><i class="bi bi-twitter"></i></a> -->
+        <a href="https://www.facebook.com/groups/apk.grp" class="facebook"><i class="bi bi-facebook"></i></a>
+        <a href="https://instagram.com/apk_panama?igshid=YmMyMTA2M2Y=" class="instagram"><i class="bi bi-instagram"></i></a>
+        
+      </div>
+    </div>
+  </section>
+
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{% url 'index' %}">
+            <img src="{% static '/apavelas/logo.jpg' %}" width="75" height="75" alt="">APAVELAS</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown1" aria-controls="navbarNavDropdown1" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown1">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a class="nav-link fw-bold"  href="{% url 'market' %}">COMPRA Y VENDE</a>
+            </li> 
+                <li class="nav-item dropdown">
+                    
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      ACERCA
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="{% url 'index' %}#about">Acerca de APAVELAS</a></li>
+                      <li><a class="dropdown-item" href="{% url 'index' %}#about">Nuestra Vision</a></li>
+                      <li><a class="dropdown-item" href="{% url 'index' %}#team">Junta Directiva</a></li>
+                      <li><a class="dropdown-item" href="{% url 'index' %}#gallery">Galeria</a></li>
+                      
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      TRANSPARENCIA
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#">Estatutos</a></li>
+                      <li><a class="dropdown-item" href="#">Estados Financieros</a></li>
+                      <li><a class="dropdown-item" href="#">Reglamentos</a></li>
+                      
+                      {% if request.user.is_staff %}
+                      <li><a class="dropdown-item" href="{% url 'accounting' %}">Contabilidad</a></li>
+                      {% endif %} 
+                    </ul>
+                  </li>
+              
+                <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    SERVICIOS
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{% url 'places' type_of_service='ESCUELAS' %}">ESCUELAS</a></li>
+                  <li><a class="dropdown-item" href="{% url 'places' type_of_service='TIENDAS' %}">TIENDAS</a></li>
+                  <li><a class="dropdown-item" href="{% url 'places' type_of_service='SPOTS' %}">SPOTS</a></li>
+                  <li><a class="dropdown-item" href="{% url 'places' type_of_service='HOTELES' %}">HOTELES</a></li>
+                  <li><a class="dropdown-item" href="{% url 'places' type_of_service='RESTAURANTES' %}">RESTAURANTES</a></li>
+                  <li><a class="dropdown-item" href="{% url 'places' type_of_service='MEDICOS' %}">MEDICOS</a></li>
+                </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'benefits' %}">BENEFICIOS</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'events' %}">EVENTOS</a>
+                </li>
+                                                                
+                
+                
+                {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Mi Cuenta
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
+                    <li>
+                      <a class="dropdown-item" href="{% url 'profile' %}">Perfil</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="{% url 'my_products' %}">Mis Anuncios</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="{% url 'members' %}">Miembros</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="{% url 'card' %}">Tarjeta</a>
+                    </li>
+                    <hr>
+                    <li>
+                      <a  class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                  </ul>
+                </li>
+                {% else %} 
+
+                <div class="btn-group dropstart">
+                  <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    MIEMBROS
+                  </button>
+                  <ul class="dropdown-menu p-2" style="width: 400px;">
+                    
+                    <form  method="post">
+                      {% csrf_token %} 
+                      <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">USUARIO</span>
+                        <input type="text" name="username" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                      </div>
+                      <div class="input-group mb-3">
+                          <span class="input-group-text" id="inputGroup-sizing-default">CONTRASEÑA</span>
+                          <input type="password" name="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                      </div>
+                      <div class="row">
+                        <a href="{% url 'password_reset' %}" class="mb-2">Recordar Contraseña</a>
+                      </div>
+                      <div class="row">
+                        <div class="col-6"> 
+                          <button type="submit" name="login" class="btn btn-primary ">INICIAR SESIÓN</button>
+                        </div>
+                        <div class="col-6">
+                          <a href="{% url 'register' %}"><button type="button" class="btn btn-secondary ">REGISTRO NUEVO</button></a>
+                        </div>
+                      </div>
+                    </form>
+                    {% endif %}
+                  </ul>
+                </div>
+            
+              
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Message Funcionality -->
+      {% if messages %}
+      {% for message in messages%}
+      {% if message.tags == "error" %}
+      <div class="container">
+          <div class="row">
+              <div class="alert alert-danger alert-dismissible ">
+                  {{message}}
+                  <button type="button" class="btn btn-{{ message.tags }}" data-bs-dismiss="alert" aria-hidden="true">&times;</button>
+              </div>
+              {% else %}
+              <div class="alert alert-{{ message.tags }} alert-dismissible ">
+                  {{ message }}
+                  <button type="button" class="btn btn-{{ message.tags }}" data-bs-dismiss="alert" aria-hidden="true">&times;</button>
+              </div>
+          </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+      {% endif %}
+
+
 <link href="{% static 'apavelas/assets/css/image_gallery.css' %}" rel="stylesheet">
 <div class="container-fluid">
     <div class="row p-2">
@@ -111,8 +319,26 @@
             <h6>Numero de Serie: {{product.numero_serie}}</h6>
             <h6>Categoria: {{product.categoria.name}}</h6>
 
+            
+            
 
+            <!-- Load Facebook SDK for JavaScript -->
+            <div id="fb-root"></div>
+            <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+            fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+
+            <!-- Your share button code -->
+            <div class="fb-share-button" 
+            data-href="https://www.apavelas.com/market/listing/{{product.id}}" 
+            data-layout="button_count">
+            </div>
         </div>
+           
   
         <div class="col-md-4 p-2">
             <h2>Contacto</h2><hr>
@@ -130,4 +356,3 @@
 </div>
 
  
-{% endblock %} 

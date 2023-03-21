@@ -132,7 +132,7 @@ class Product(models.Model):
     marca = models.CharField(max_length=40, blank=True)
     modelo = models.CharField(max_length=40, blank=True)
     year = models.IntegerField(null=True, blank=True, default=1990)
-    numero_serie = models.CharField(max_length=40, blank=True, null=True)
+    numero_serie = models.CharField(max_length=40, blank=True)
     descripcion = models.TextField(blank=True, null=True)
     categoria = models.ForeignKey(Category, on_delete=models.SET_NULL, blank=True, null=True)
     precio = models.DecimalField(max_digits=10, decimal_places=2, default=0)

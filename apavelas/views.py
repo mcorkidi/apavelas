@@ -279,6 +279,7 @@ def newListing(request, category):
     def checkForInt(x):
         try:
             int(x)
+            print(x)
             return x
         except:
             return 0
@@ -293,7 +294,7 @@ def newListing(request, category):
     category = Category.objects.filter(name=category)[0]
     if request.method == 'POST':
         if 'next' in request.POST:
-            
+            print(request.POST)
             newProduct=Product.objects.create(
                 user=request.user, 
                 titulo=request.POST.get('titulo'),
@@ -307,7 +308,7 @@ def newListing(request, category):
                 entrega=request.POST.get('entrega'),
                 costo_envio=request.POST.get('costo_envio'),
                 nombre =request.POST.get('nombre'),
-                telefono=request.POST.get('telefono'),
+                telefono='+' + request.POST.get('pais') + '-' + request.POST.get('telefono'),
                 correo =request.POST.get('correo'),
                 categoria=category
 
@@ -429,7 +430,8 @@ def searchResults(request, keyword):
     authentication(request)
    
     products = Product.objects.filter(titulo__icontains=keyword, active=True) | Product.objects.filter(marca__icontains=keyword, active=True)\
-    | Product.objects.filter(modelo__icontains=keyword, active=True) | Product.objects.filter(year__icontains=keyword, active=True) 
+    | Product.objects.filter(modelo__icontains=keyword, active=True) | Product.objects.filter(year__icontains=keyword, active=True)\
+    | Product.objects.filter(categoria=Category.objects.filter(name__icontains=keyword)[0], active=True)
     
     categories = Category.objects.all()[0:4]
     if request.method == 'POST':
@@ -466,8 +468,10 @@ def myProducts(request):
 def editListing(request, product_id):
     emailList(request)
     def checkForInt(x):
+        print(x)
         try:
             int(x)
+            print(x)
             return x
         except:
             return 0
@@ -492,7 +496,7 @@ def editListing(request, product_id):
             product.condicion=request.POST.get('condicion')
             product.marca=request.POST.get('marca')
             product.modelo=request.POST.get('modelo')
-            product.year=checkForInt(request.POST.get('year')[0])
+            product.year=checkForInt(request.POST.get('year'))
             product.numero_serie=request.POST.get('numero_serie')
             product.descripcion=request.POST.get('descripcion')
             product.precio=checkForFloat(request.POST.get('precio'))
@@ -598,10 +602,6 @@ def editListing(request, product_id):
                     except Exception as e:
                         print(f"Error in with FTP: {e}")   
                         messages.error(request, f"Error subiendo tus imagenes. Intenta nuevamente o contacta al admnistrador. \n {e}")  
-
-
-        
-
 
     context = {'product': product, 'images':images, 'categories': categories}
     

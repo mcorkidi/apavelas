@@ -73,26 +73,34 @@
         
     </div>
     <hr>
-    <div class="row section-bg">
+    
         <h1>Nuevos Anuncios</h1>
-        <!-- <div class="d-flex justify-content-around"> -->
-        {% for product in products %} 
-          <div class="col-lg-2 col-md-3 col-sm-12">
-        <div class="shadow rounded p-2 text-center">
-        
-          {{product.titulo}} <br>
-          {% for image in product.imageList|slice:":1" %}
-          <img src="{{image}}" alt="no image" srcset="" width="150">
-        
-          {% endfor %}
-          <br>
-          ${{product.precio}}
-        </div>
-      </div>
+        <div class="row row-cols-auto section-bg">
+          {% for product in products %} 
+          
+          <div class="col d-flex align-items-stretch">
+            
+              <div class="card mt-2" style="width: 18rem; ">
+                {% for image in product.imageList|slice:":1" %}
+                <a href="{% url 'listing' product_id=product.id %}">
+                <img src="{{image}}" class="card-img-top" max-width="100" max-height="200" alt="...">
+                </a>
+                {% endfor %}
+                <div class="card-body">
+                    
+                  {{product.titulo}}
+                </div>
+                <div class="card-footer">
+                  ${{product.precio}}
+                </div>
+              </div>
+         
+          </div>
+          
         {% endfor %} 
-        
+      </div>
       
-    </div>
+   
 
 </div>
 

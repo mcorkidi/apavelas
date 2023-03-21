@@ -40,23 +40,23 @@
         </div>
     </div>
     <div class="row p-2">
-        <div class="col-md-2">
+        <div class="col-lg-2 col-sm-12">
             <h3>Filtros</h3>
         </div>
-        <div class="col-md-10">
+        <div class="col-lg-10 col-sm-12">
             <div class="list-group">
                 {% for product in products %} 
                 
                 
                     <div class="list-group-item list-group-item-action">
                         <div class="row">
-                        <div class="col-4">
+                        <div class="col-lg-4 col-sm-12">
                         {% for image in product.imageList|slice:":1" %}
-                        <img src="{{image}}" alt="no image" srcset="" width="300">
+                        <img src="{{image}}" alt="no image" srcset="" width="100%" height="auto">
                         
                         {% endfor %}
                         </div>
-                        <div class="col-6">
+                        <div class="col-lg-6 col-sm-12">
                         <h4>{{product.titulo}}</h4> 
                         {{product.get_condicion_display}}
                         <h5>Precio: ${{product.precio}}</h5>
@@ -68,7 +68,7 @@
                         <h6>Estado: Desactivado</h6>
                         {% endif %}
                         </div>
-                        <div class="col-2">
+                        <div class="col-lg-2 col-sm-12">
                         <a class="btn btn-primary mb-2" role="button" href="{% url 'listing' product_id=product.id %}">Ver Anuncio</a><br>
                         <a class="btn btn-info mb-2" role="button" href="{% url 'edit_listing' product_id=product.id %}">Editar</a>
                         <form method="post">

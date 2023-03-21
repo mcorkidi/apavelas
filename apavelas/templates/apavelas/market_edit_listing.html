@@ -13,7 +13,7 @@
                 <select class="form-select needs-validation" id="inputGroupSelect03" name="new_category" required>
                 <option  disabled>Selecciona...</option>
                 {% for category in categories  %}
-                {% if product.catergoria.name == category.name %}
+                {% if product.categoria.name == category.name %}
                 <option selected value="{{category.name}}">{{category.name}}</option>
                 {% else %} 
                 <option value="{{category.name}}">{{category.name}}</option>
@@ -59,7 +59,7 @@
                 <div class="col-lg-3">
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-default">Numero de Serie</span>
-                        <input type="text" name="modelo" value="{{product.modelo}}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        <input type="text" name="numero_serie" value="{{product.numero_serie}}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                     </div>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                     <div class="input-group mb-3" >
                         <select class="form-select" id="inputGroupSelect03" name="condicion">
                         <option disabled >Selecciona...</option>
-                        {% if product.condicion == "USADO" %} 
+                        {% if product.condicion == "U" %} 
                         <option selected value="U">USADO</option>
                         <option value="N">NUEVO</option>
                         {% else %} 
@@ -91,7 +91,7 @@
             <div class="row">
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="inputGroup-sizing-default">Descripcion</span>
-                    <textarea type="textarea" rows="3" name="descripcion" value="{{product.descripcion}}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"></textarea>
+                    <textarea type="textarea" rows="3" name="descripcion" value="{{product.descripcion}}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">{{product.descripcion}}</textarea>
                 </div>
             </div>
 
@@ -127,7 +127,7 @@
                     <div class="col-lg-8">
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-default">Instrucciones de entrega:</span>
-                        <textarea type="textarea" rows="3" name="entrega" value="{{product.entrega}}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"></textarea>
+                        <textarea type="textarea" rows="3" name="entrega" value="{{product.entrega}}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">{{product.entrega}}</textarea>
                     </div>
                     </div>
                     <div class="col-lg-4">
@@ -162,7 +162,7 @@
                     <div class="card-footer">
                         <button class="btn btn-danger" name="delete_image" value="{{image}}" onclick="if (confirm('Confirma eliminar imagen.')) return true; else return false;" >Eliminar</button>
                     </div>
-                    </div>
+                </div>
                 {% endfor %} 
     
             </div>
