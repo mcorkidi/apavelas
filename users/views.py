@@ -2,7 +2,7 @@ from pickletools import optimize
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from users.models import Profile
-from apavelas.models import Transaction
+from apavelas.models import Transaction, EmailList
 from apavelas.views import emailList, authentication
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -19,9 +19,26 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
 
-# Create your views here.
+def pre_register(request):
+    emailList(request)
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        if EmailList.objects.filter(email=email).exists():
+            htmlWelcome = render_to_string('email/verify.html', {'email_id': EmailList.objects.get(email=email).id})
+            plainWelcome = strip_tags(htmlWelcome)
+            send_mail('Bienvenido a APK', plainWelcome, 'noreply@apavelas.com', [email], html_message=htmlWelcome)
+            messages.success(request, 'Correo enviado correctamente.')
+        else:
+            newMail = EmailList.objects.create(email=email)
+            
+            htmlWelcome = render_to_string('email/verify.html', {'email_id': newMail.id})
+            plainWelcome = strip_tags(htmlWelcome)
+            send_mail('Bienvenido a APK', plainWelcome, 'noreply@apavelas.com', [email], html_message=htmlWelcome)
+            messages.success(request, 'Correo enviado correctamente.')
 
-def register(request):
+    return render(request, 'users/pre_register.html')
+
+def register(request, email_id):
     emailList(request)
     
     if request.method == 'POST':
@@ -76,9 +93,9 @@ def register(request):
                 messages.error(request, "Credenciales invalidos, intenta nuevamente.")
                 return redirect('index')
 
-
-
-    return render(request, 'users/registration.html')
+    registered_email = EmailList.objects.get(id=email_id)
+    context = {"registered_email": registered_email}
+    return render(request, 'users/registration.html', context)
 
 @login_required
 def profile(request):

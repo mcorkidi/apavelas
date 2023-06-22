@@ -1,7 +1,7 @@
 from django.db import models
 from datetime import datetime, timedelta
 from django.contrib.auth.models import User
-# Create your models here.
+import uuid
 
 class Benefit(models.Model):
     nombre = models.CharField(max_length=255, blank=True, null=True)
@@ -101,6 +101,7 @@ class Transaction(models.Model):
 
 class EmailList(models.Model):
     email = models.EmailField(blank=True, null=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     def __str__(self):
         return self.email

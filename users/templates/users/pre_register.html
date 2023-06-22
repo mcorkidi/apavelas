@@ -1,0 +1,28 @@
+{% extends 'apavelas/base.html' %}
+{% block body %}
+{% load static %}
+
+<div class="container d-flex justify-content-center shadow mt-4 mb-4" >
+    <div class="col-lg-8 col-sm-12">
+        <div class="row">
+            <h1>Verifica tu correo</h1>
+        </div>
+    <form method="post">
+        {% csrf_token %} 
+        <div class="row">
+            <p>Ingresa tu correo. Te enviaremos un correo con un vinculo para que puedas registrarte y verificar tu correo. Acuerdate de revisar Correo Chatarra, "Junk Mail"</p>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-sm-12">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Correo</span>
+                    <input type="email" name="email" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                </div>
+                <button type="submit" name="register" class="btn btn-primary mb-4">Verifica</button>
+            </div>
+        </div>
+    </form>
+    </div>
+</div>
+
+{% endblock %}
