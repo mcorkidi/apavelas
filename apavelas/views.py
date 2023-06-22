@@ -514,6 +514,7 @@ def editListing(request, product_id):
                 new_images = request.FILES.getlist('new_images')
                 images_linkchain = product.images
                 for i, new_image in enumerate(new_images):
+                    print('DEBUG>>>>>>> adding edit image')
                     filename = str(i) +  os.path.splitext(new_image.name)[1]
                     handle_uploaded_file(new_image, filename)
                     if images_linkchain == "":

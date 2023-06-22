@@ -30,9 +30,9 @@ class EventsForm(forms.ModelForm):
 #         model=Photo
 #         fields='__all__'
     
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields["uploader"].disabled = True
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.fields["uploader"].disabled = True
 
 class TransactionForm(forms.ModelForm):
     class Meta:
