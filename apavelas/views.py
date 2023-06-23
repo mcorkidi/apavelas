@@ -163,26 +163,6 @@ def events(request):
     context = {'events': events, 'form': form}
     return render(request, 'apavelas/events.html', context)
 
-# def gallery(request):
-    # emailList(request)
-    # photos = Photo.objects.all()
-    # if request.method == 'POST':
-    #     if 'login' in request.POST:
-    #         authentication(request)
-    #     if 'new' in request.POST:
-    #         form = GalleryForm(request.POST, request.FILES)
-            
-    #         if form.is_valid:
-    #             form.save()
-    #     if 'delete' in request.POST:
-    #         print('delete' , request.POST)
-    #         toBeDeleted = Photo.objects.get(id=request.POST.get('delete'))
-    #         toBeDeleted.delete()
-    
-    # form = GalleryForm(initial={'uploader': request.user.username})
-    # context = {'photos': photos, 'form': form}
-    # return render(request, 'apavelas/gallery.html', context)
-
 @login_required
 @staff_member_required
 def accounting(request):
@@ -222,6 +202,8 @@ def statement(request):
     transactions = Transaction.objects.all()
     income_accounts = {}
     expense_accounts = {}
+    totalIncome = 0
+    totalExpenses = 0
     for i in transactions:
         if i.type_of_transaction == "INGRESO":
             if i.account.name not in income_accounts:
@@ -229,14 +211,17 @@ def statement(request):
             else:
                 print(income_accounts[i.account.name])
                 income_accounts[i.account.name] += i.amount
+            totalIncome += i.amount
         elif i.type_of_transaction == "GASTO":
             if i.account.name not in expense_accounts:
                 expense_accounts[i.account.name] = i.amount
             else:
                 expense_accounts[i.account.name] += i.amount
-    
-
-    context = {'income_accounts': income_accounts, 'expense_accounts':expense_accounts}
+            totalExpenses += i.amount
+    totalIncome = "{:,.2f}".format(totalIncome)
+    totalExpenses = "{:,.2f}".format(totalExpenses)
+    context = {'income_accounts': income_accounts, 'expense_accounts':expense_accounts,
+               'totalIncome': totalIncome, 'totalExpenses': totalExpenses}
     return render(request, "apavelas/statement.html", context)
 
 

@@ -1,8 +1,8 @@
 {% extends 'apavelas/base.html' %}
 {% block body %}
 {% load static %}
-<div class="container">
-    <div class="col-md-6 col-sm-11"><div class="p-2 shadow rounded mb-2 mt-2"><h1>Contabilidad</h1></div></div>
+<div class="container shadow p-3">
+    
     
     <ul class="nav nav-tabs">
         <li class="nav-item">
@@ -14,15 +14,19 @@
         
         
     </ul>
-    <h3>Ingresos</h3>
-    {% for account, value in income_accounts.items %} 
-     {{account}} - {{value}}<br>
-     {% endfor %}
-    <h3>Gastos</h3>
-     {% for account, value in expense_accounts.items %} 
-     {{account}} - {{value}}<br>
-     {% endfor %}
-
+    <div class="col-lg-7 col-sm-12">
+        <h3>Ingresos</h3>
+        {% for account, value in income_accounts.items %} 
+        {{account}} - ${{value}}<br>
+        {% endfor %}
+        Total: ${{totalIncome}}
+        <hr>
+        <h3>Gastos</h3>
+        {% for account, value in expense_accounts.items %} 
+        {{account}} - ${{value}}<br>
+        {% endfor %}
+        Total: ${{totalExpenses}}
+    </div>
 </div>
 
   {% endblock %} 
