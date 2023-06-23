@@ -37,7 +37,7 @@ urlpatterns = [
     path('market/my_products/', views.myProducts, name='my_products'),
     path('market/edit_listing/<product_id>', views.editListing, name='edit_listing'),
     path("reglamento/",TemplateView.as_view(template_name="apavelas/reglamento.html"), name="reglamento"),
-    
+    path("estatutos/",TemplateView.as_view(template_name="apavelas/estatutos.html"), name="estatutos"),
 
 ]
 
