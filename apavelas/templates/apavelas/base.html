@@ -92,7 +92,7 @@
                     <ul class="dropdown-menu">
                       <li><a class="dropdown-item" href="#">Estatutos</a></li>
                       <li><a class="dropdown-item" href="#">Estados Financieros</a></li>
-                      <li><a class="dropdown-item" href="#">Reglamentos</a></li>
+                      <li><a class="dropdown-item" href="{% url 'reglamento' %}">Reglamentos</a></li>
                       
                       {% if request.user.is_staff %}
                       <li><a class="dropdown-item" href="{% url 'accounting' %}">Contabilidad</a></li>
