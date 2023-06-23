@@ -24,14 +24,14 @@ def pre_register(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         if EmailList.objects.filter(email=email).exists():
-            htmlWelcome = render_to_string('email/verify.html', {'email_id': EmailList.objects.get(email=email).id})
+            htmlWelcome = render_to_string('email/verify.html', {'email_id': EmailList.objects.get(email=email).identifier})
             plainWelcome = strip_tags(htmlWelcome)
             send_mail('Bienvenido a APK', plainWelcome, 'noreply@apavelas.com', [email], html_message=htmlWelcome)
             messages.success(request, 'Correo enviado correctamente.')
         else:
             newMail = EmailList.objects.create(email=email)
             
-            htmlWelcome = render_to_string('email/verify.html', {'email_id': newMail.id})
+            htmlWelcome = render_to_string('email/verify.html', {'email_id': newMail.identifier})
             plainWelcome = strip_tags(htmlWelcome)
             send_mail('Bienvenido a APK', plainWelcome, 'noreply@apavelas.com', [email], html_message=htmlWelcome)
             messages.success(request, 'Correo enviado correctamente.')
@@ -93,7 +93,7 @@ def register(request, email_id):
                 messages.error(request, "Credenciales invalidos, intenta nuevamente.")
                 return redirect('index')
 
-    registered_email = EmailList.objects.get(id=email_id)
+    registered_email = EmailList.objects.get(identifier=email_id)
     context = {"registered_email": registered_email}
     return render(request, 'users/registration.html', context)
 
