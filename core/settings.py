@@ -16,7 +16,7 @@ from .secrets import *
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-BASE_HOST = "https://www.apavelas.com/"
+BASE_HOST = "https://www.apkpty.com/"
 
 
 # Quick-start development settings - unsuitable for production
@@ -28,7 +28,7 @@ SECRET_KEY = SECRET_SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','www.apavelas.com']
+ALLOWED_HOSTS = ['127.0.0.1','www.apkpty.com']
 
 
 # Application definition
