@@ -26,14 +26,14 @@ def pre_register(request):
         if EmailList.objects.filter(email=email).exists():
             htmlWelcome = render_to_string('email/verify.html', {'email_id': EmailList.objects.get(email=email).identifier})
             plainWelcome = strip_tags(htmlWelcome)
-            send_mail('Bienvenido a APK', plainWelcome, 'noreply@apavelas.com', [email], html_message=htmlWelcome)
+            send_mail('Bienvenido a APK', plainWelcome, 'noreply@apkpty.com', [email], html_message=htmlWelcome)
             messages.success(request, 'Correo enviado correctamente.')
         else:
             newMail = EmailList.objects.create(email=email)
             
             htmlWelcome = render_to_string('email/verify.html', {'email_id': newMail.identifier})
             plainWelcome = strip_tags(htmlWelcome)
-            send_mail('Bienvenido a APK', plainWelcome, 'noreply@apavelas.com', [email], html_message=htmlWelcome)
+            send_mail('Bienvenido a APK', plainWelcome, 'noreply@apkpty.com', [email], html_message=htmlWelcome)
             messages.success(request, 'Correo enviado correctamente.')
 
     return render(request, 'users/pre_register.html')
@@ -81,7 +81,7 @@ def register(request, email_id):
             img.save(f'{settings.MEDIA_ROOT}/qrcodes/{newProfile.id}.jpg')
             htmlWelcome = render_to_string('email/welcome.html', {'first_name': first_name})
             plainWelcome = strip_tags(htmlWelcome)
-            send_mail('Bienvenido a APK', plainWelcome, 'noreply@apavelas.com', [email], html_message=htmlWelcome)
+            send_mail('Bienvenido a APK', plainWelcome, 'noreply@apkpty.com', [email], html_message=htmlWelcome)
 
             messages.success(request, 'Te registraste exitosamente, procede a iniciar la sesión.')
             auth = authenticate(request, username=username, password=password)
